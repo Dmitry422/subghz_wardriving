@@ -46,21 +46,21 @@ void subghz_scene_save_name_on_enter(void* context) {
         furi_string_set(subghz->file_path_tmp, subghz->file_path);
         path_extract_dirname(furi_string_get_cstr(subghz->file_path), dir_name);
         path_extract_filename(subghz->file_path, file_name, true);
-        if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-           SubGhzCustomEventManagerNoSet) {
-            if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) ==
-               SubGhzCustomEventManagerSetRAW) {
-                dev_name_empty = true;
-                if(subghz->last_settings->protocol_file_names) {
-                    name_generator_make_auto_datetime(
-                        file_name_buf, SUBGHZ_MAX_LEN_NAME, "RAW", datetime);
-                } else {
-                    name_generator_make_auto_datetime(
-                        file_name_buf, SUBGHZ_MAX_LEN_NAME, SUBGHZ_APP_FILENAME_PREFIX, datetime);
-                }
-                furi_string_set(file_name, file_name_buf);
-            }
-        }
+        // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+        //    SubGhzCustomEventManagerNoSet) {
+        //     if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) ==
+        //        SubGhzCustomEventManagerSetRAW) {
+        //         dev_name_empty = true;
+        //         if(subghz->last_settings->protocol_file_names) {
+        //             name_generator_make_auto_datetime(
+        //                 file_name_buf, SUBGHZ_MAX_LEN_NAME, "RAW", datetime);
+        //         } else {
+        //             name_generator_make_auto_datetime(
+        //                 file_name_buf, SUBGHZ_MAX_LEN_NAME, SUBGHZ_APP_FILENAME_PREFIX, datetime);
+        //         }
+        //         furi_string_set(file_name, file_name_buf);
+        //     }
+        // }
         furi_string_set(subghz->file_path, dir_name);
     }
 
@@ -90,13 +90,13 @@ bool subghz_scene_save_name_on_event(void* context, SceneManagerEvent event) {
         // Set file path to default
         furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);
         //
-        if(!(strcmp(subghz->file_name_tmp, "") == 0) ||
-           scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-               SubGhzCustomEventManagerNoSet) {
-            if(!scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneDecodeRAW)) {
-                furi_string_set(subghz->file_path, subghz->file_path_tmp);
-            }
-        }
+        // if(!(strcmp(subghz->file_name_tmp, "") == 0) ||
+        //    scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+        //        SubGhzCustomEventManagerNoSet) {
+        //     if(!scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneDecodeRAW)) {
+        //         furi_string_set(subghz->file_path, subghz->file_path_tmp);
+        //     }
+        // }
 
         scene_manager_previous_scene(subghz->scene_manager);
 
@@ -133,24 +133,24 @@ bool subghz_scene_save_name_on_event(void* context, SceneManagerEvent event) {
                     }
                 }
 
-                if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-                   SubGhzCustomEventManagerNoSet) {
-                    subghz_protocol_raw_gen_fff_data(
-                        subghz_wardiving_txrx_get_fff_data(subghz->txrx),
-                        furi_string_get_cstr(subghz->file_path),
-                        subghz_wardiving_txrx_radio_device_get_name(subghz->txrx));
-                    scene_manager_set_scene_state(
-                        subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
-                } else {
+                // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+                //    SubGhzCustomEventManagerNoSet) {
+                //     subghz_protocol_raw_gen_fff_data(
+                //         subghz_wardiving_txrx_get_fff_data(subghz->txrx),
+                //         furi_string_get_cstr(subghz->file_path),
+                //         subghz_wardiving_txrx_radio_device_get_name(subghz->txrx));
+                //     scene_manager_set_scene_state(
+                //         subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
+                // } else {
                     subghz_file_name_clear(subghz);
-                }
+                // }
 
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneSaveSuccess);
                 if(scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneSavedMenu)) {
                     // Nothing, do not count editing as saving
-                } else if(scene_manager_has_previous_scene(
-                              subghz->scene_manager, SubGhzSceneMoreRAW)) {
-                    // Ditto, for RAW signals
+                // } else if(scene_manager_has_previous_scene(
+                //               subghz->scene_manager, SubGhzSceneMoreRAW)) {
+                //     // Ditto, for RAW signals
                 } else if(scene_manager_has_previous_scene(
                               subghz->scene_manager, SubGhzSceneSetType)) {
                     dolphin_deed(DolphinDeedSubGhzAddManually);

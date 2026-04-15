@@ -540,8 +540,8 @@ void subghz_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_text(
         item, subghz_setting_get_preset_name(setting, value_index));
 
-    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-       SubGhzCustomEventManagerSet) {
+    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+    //    SubGhzCustomEventManagerSet) {
         // Hopping
         value_index = subghz_scene_receiver_config_hopper_value_index(subghz);
         item = variable_item_list_add(
@@ -553,10 +553,10 @@ void subghz_scene_receiver_config_on_enter(void* context) {
 
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, hopping_mode_text[value_index]);
-    }
+    // }
 
-    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-       SubGhzCustomEventManagerSet) {
+    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+    //    SubGhzCustomEventManagerSet) {
         item = variable_item_list_add(
             subghz->variable_item_list,
             "Bin RAW",
@@ -697,7 +697,7 @@ void subghz_scene_receiver_config_on_enter(void* context) {
         //     subghz->ignore_filter, SubGhzProtocolFilter_TPMS);
         // variable_item_set_current_value_index(item, value_index);
         // variable_item_set_current_value_text(item, combobox_text[value_index]);
-    }
+    // }
 
     // Enable speaker, will send all incoming noises and signals to speaker so you can listen how your remote sounds like :)
     item = variable_item_list_add(
@@ -711,8 +711,8 @@ void subghz_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-       SubGhzCustomEventManagerSet) {
+    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+    //    SubGhzCustomEventManagerSet) {
         // Reset to default
         variable_item_list_add(subghz->variable_item_list, "Reset to Default", 1, NULL, NULL);
 
@@ -720,19 +720,19 @@ void subghz_scene_receiver_config_on_enter(void* context) {
             subghz->variable_item_list,
             subghz_scene_receiver_config_var_list_enter_callback,
             subghz);
-    }
-    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-       SubGhzCustomEventManagerSet) {
+    // }
+    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
+    //    SubGhzCustomEventManagerSet) {
         // Lock keyboard
         variable_item_list_add(subghz->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
         variable_item_list_set_enter_callback(
             subghz->variable_item_list,
             subghz_scene_receiver_config_var_list_enter_callback,
             subghz);
-    }
+    // }
 
-    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) ==
-       SubGhzCustomEventManagerSet) {
+    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) ==
+    //    SubGhzCustomEventManagerSet) {
         item = variable_item_list_add(
             subghz->variable_item_list,
             "RSSI Threshold:",
@@ -745,7 +745,7 @@ void subghz_scene_receiver_config_on_enter(void* context) {
             RAW_THRESHOLD_RSSI_COUNT);
         variable_item_set_current_value_index(item, value_index);
         variable_item_set_current_value_text(item, raw_threshold_rssi_text[value_index]);
-    }
+    // }
 
     variable_item_list_set_selected_item(
         subghz->variable_item_list,
@@ -791,6 +791,6 @@ void subghz_scene_receiver_config_on_exit(void* context) {
     variable_item_list_reset(subghz->variable_item_list);
 
     subghz_last_settings_save(subghz->last_settings);
-    scene_manager_set_scene_state(
-        subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
+    // scene_manager_set_scene_state(
+    //     subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
 }

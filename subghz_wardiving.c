@@ -175,15 +175,8 @@ SubGhz* subghz_alloc(bool alloc_for_tx_only) {
             subghz->view_dispatcher,
             SubGhzViewIdVariableItemList,
             variable_item_list_get_view(subghz->variable_item_list));
-
-        // Frequency Analyzer
-        // View knows too much
-        subghz->subghz_frequency_analyzer = subghz_frequency_analyzer_alloc(subghz->txrx);
-        view_dispatcher_add_view(
-            subghz->view_dispatcher,
-            SubGhzViewIdFrequencyAnalyzer,
-            subghz_frequency_analyzer_get_view(subghz->subghz_frequency_analyzer));
     }
+
     // Read RAW
     subghz->subghz_read_raw = subghz_read_raw_alloc(alloc_for_tx_only);
     view_dispatcher_add_view(
@@ -318,10 +311,6 @@ void subghz_free(SubGhz* subghz, bool alloc_for_tx_only) {
         // Variable Item List
         view_dispatcher_remove_view(subghz->view_dispatcher, SubGhzViewIdVariableItemList);
         variable_item_list_free(subghz->variable_item_list);
-
-        // Frequency Analyzer
-        view_dispatcher_remove_view(subghz->view_dispatcher, SubGhzViewIdFrequencyAnalyzer);
-        subghz_frequency_analyzer_free(subghz->subghz_frequency_analyzer);
     }
     // Read RAW
     view_dispatcher_remove_view(subghz->view_dispatcher, SubGhzViewIdReadRAW);

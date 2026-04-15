@@ -50,11 +50,11 @@ bool subghz_scene_need_saving_on_event(void* context, SceneManagerEvent event) {
             subghz_rx_key_state_set(subghz, SubGhzRxKeyStateIDLE);
 
             if(state == SubGhzRxKeyStateExit) {
-                if(scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneReadRAW)) {
-                    if(!furi_string_empty(subghz->file_path_tmp)) {
-                        subghz_delete_file(subghz);
-                    }
-                }
+                // if(scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneReadRAW)) {
+                //     if(!furi_string_empty(subghz->file_path_tmp)) {
+                //         subghz_delete_file(subghz);
+                //     }
+                // }
 
                 subghz_wardiving_txrx_set_preset(
                     subghz->txrx, "AM650", subghz->last_settings->frequency, NAN, NAN, NULL, 0);
