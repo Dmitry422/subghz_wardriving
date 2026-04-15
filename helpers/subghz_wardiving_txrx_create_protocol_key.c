@@ -588,15 +588,15 @@ void subghz_wardiving_txrx_gen_key_marantec(uint64_t* result_key) {
     uint64_t full_key_no_crc = (uint64_t)((uint64_t)0x130 << 40 | (uint64_t)serial << 20 |
                                           (uint64_t)0x4 << 16 | (uint64_t)0x86 << 8);
 
-    uint8_t tdata[6] = {
-        full_key_no_crc >> 48,
-        full_key_no_crc >> 40,
-        full_key_no_crc >> 32,
-        full_key_no_crc >> 24,
-        full_key_no_crc >> 16,
-        full_key_no_crc >> 8};
+    // uint8_t tdata[6] = {
+    //     full_key_no_crc >> 48,
+    //     full_key_no_crc >> 40,
+    //     full_key_no_crc >> 32,
+    //     full_key_no_crc >> 24,
+    //     full_key_no_crc >> 16,
+    //     full_key_no_crc >> 8};
 
-    uint8_t crc = subghz_protocol_marantec_crc8(tdata, sizeof(tdata));
+    uint8_t crc = 0; //subghz_protocol_marantec_crc8(tdata, sizeof(tdata));
 
     *result_key = ((full_key_no_crc >> 8) << 8) | crc;
 }

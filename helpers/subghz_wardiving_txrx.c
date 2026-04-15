@@ -756,7 +756,7 @@ void subghz_wardiving_txrx_reset_dynamic_and_custom_btns(SubGhzTxRxWarDiving* in
     furi_assert(instance);
     subghz_environment_reset_keeloq(instance->environment);
 
-    faac_slh_reset_prog_mode();
+    //faac_slh_reset_prog_mode();
 
     subghz_custom_btns_reset();
 }
