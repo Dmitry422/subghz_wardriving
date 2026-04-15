@@ -29,8 +29,7 @@ void subghz_scene_save_name_on_enter(void* context) {
         SubGhzProtocolDecoderBase* decoder_result =
             subghz_wardiving_txrx_get_decoder(subghz->txrx);
         if(subghz->last_settings->protocol_file_names && decoder_result != NULL &&
-           strlen(decoder_result->protocol->name) != 0 &&
-           !scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneSetType)) {
+           strlen(decoder_result->protocol->name) != 0) {
             name_generator_make_auto_datetime(
                 file_name_buf, SUBGHZ_MAX_LEN_NAME, decoder_result->protocol->name, datetime);
         } else {
@@ -114,23 +113,23 @@ bool subghz_scene_save_name_on_event(void* context, SceneManagerEvent event) {
                         return false;
                     }
                 } else {
-                    if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneSetType) !=
-                       SubGhzCustomEventManagerNoSet) {
-                        subghz_save_protocol_to_file(
-                            subghz,
-                            subghz_wardiving_txrx_get_fff_data(subghz->txrx),
-                            furi_string_get_cstr(subghz->file_path));
-                        scene_manager_set_scene_state(
-                            subghz->scene_manager,
-                            SubGhzSceneSetType,
-                            SubGhzCustomEventManagerNoSet);
-                    } else {
-                        subghz_save_protocol_to_file(
-                            subghz,
-                            subghz_wardiving_history_get_raw_data(
-                                subghz->history, subghz->idx_menu_chosen),
-                            furi_string_get_cstr(subghz->file_path));
-                    }
+                    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneSetType) !=
+                    //    SubGhzCustomEventManagerNoSet) {
+                    //     subghz_save_protocol_to_file(
+                    //         subghz,
+                    //         subghz_wardiving_txrx_get_fff_data(subghz->txrx),
+                    //         furi_string_get_cstr(subghz->file_path));
+                    //     scene_manager_set_scene_state(
+                    //         subghz->scene_manager,
+                    //         SubGhzSceneSetType,
+                    //         SubGhzCustomEventManagerNoSet);
+                    // } else {
+                    subghz_save_protocol_to_file(
+                        subghz,
+                        subghz_wardiving_history_get_raw_data(
+                            subghz->history, subghz->idx_menu_chosen),
+                        furi_string_get_cstr(subghz->file_path));
+                    // }
                 }
 
                 // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
@@ -142,18 +141,18 @@ bool subghz_scene_save_name_on_event(void* context, SceneManagerEvent event) {
                 //     scene_manager_set_scene_state(
                 //         subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
                 // } else {
-                    subghz_file_name_clear(subghz);
+                subghz_file_name_clear(subghz);
                 // }
 
                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneSaveSuccess);
                 if(scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneSavedMenu)) {
                     // Nothing, do not count editing as saving
-                // } else if(scene_manager_has_previous_scene(
-                //               subghz->scene_manager, SubGhzSceneMoreRAW)) {
-                //     // Ditto, for RAW signals
-                } else if(scene_manager_has_previous_scene(
-                              subghz->scene_manager, SubGhzSceneSetType)) {
-                    dolphin_deed(DolphinDeedSubGhzAddManually);
+                    // } else if(scene_manager_has_previous_scene(
+                    //               subghz->scene_manager, SubGhzSceneMoreRAW)) {
+                    //     // Ditto, for RAW signals
+                    // } else if(scene_manager_has_previous_scene(
+                    //               subghz->scene_manager, SubGhzSceneSetType)) {
+                    //     dolphin_deed(DolphinDeedSubGhzAddManually);
                 } else {
                     dolphin_deed(DolphinDeedSubGhzSave);
                 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "helpers/subghz_wardiving_types.h"
-#include "helpers/subghz_wardiving_gen_info.h"
 #include <lib/subghz/types.h>
 #include "subghz_wardiving.h"
 #include "views/receiver.h"
@@ -83,8 +82,6 @@ struct SubGhz {
     bool remove_duplicates;
     FuriString* error_str;
     SubGhzLock lock;
-
-    GenInfo* gen_info;
 
     SubGhzFileEncoderWorker* decode_raw_file_worker_encoder;
 
