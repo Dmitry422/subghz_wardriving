@@ -1,8 +1,8 @@
 #pragma once
 
 #include <gui/view.h>
-#include "../helpers/subghz_types.h"
-#include "../helpers/subghz_custom_event.h"
+#include "../helpers/subghz_wardiving_types.h"
+#include "../helpers/subghz_wardiving_custom_event.h"
 
 typedef struct SubGhzViewTransmitter SubGhzViewTransmitter;
 

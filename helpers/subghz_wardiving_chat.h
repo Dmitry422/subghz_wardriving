@@ -1,0 +1,36 @@
+#pragma once
+#include "../subghz_wardiving_i.h"
+#include <lib/subghz/devices/devices.h>
+#include <toolbox/pipe.h>
+
+typedef struct SubGhzChatWorker SubGhzChatWorker;
+
+typedef enum {
+    SubGhzChatEventNoEvent,
+    SubGhzChatEventUserEntrance,
+    SubGhzChatEventUserExit,
+    SubGhzChatEventInputData,
+    SubGhzChatEventRXData,
+    SubGhzChatEventNewMessage,
+} SubGhzChatEventType;
+
+typedef struct {
+    SubGhzChatEventType event;
+    char c;
+} SubGhzChatEvent;
+
+SubGhzChatWorker* subghz_wardiving_chat_worker_alloc(PipeSide* pipe);
+void subghz_wardiving_chat_worker_free(SubGhzChatWorker* instance);
+bool subghz_wardiving_chat_worker_start(
+    SubGhzChatWorker* instance,
+    const SubGhzDevice* device,
+    uint32_t frequency);
+void subghz_wardiving_chat_worker_stop(SubGhzChatWorker* instance);
+bool subghz_wardiving_chat_worker_is_running(SubGhzChatWorker* instance);
+SubGhzChatEvent subghz_wardiving_chat_worker_get_event_chat(SubGhzChatWorker* instance);
+void subghz_wardiving_chat_worker_put_event_chat(
+    SubGhzChatWorker* instance,
+    SubGhzChatEvent* event);
+size_t subghz_wardiving_chat_worker_available(SubGhzChatWorker* instance);
+size_t subghz_wardiving_chat_worker_read(SubGhzChatWorker* instance, uint8_t* data, size_t size);
+bool subghz_wardiving_chat_worker_write(SubGhzChatWorker* instance, uint8_t* data, size_t size);

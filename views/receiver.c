@@ -1,5 +1,5 @@
 #include "receiver.h"
-#include "../subghz_i.h"
+#include "../subghz_wardiving_i.h"
 
 #include "types.h"
 #include <input/input.h>
@@ -7,7 +7,7 @@
 #include <assets_icons.h>
 #include <m-array.h>
 
-#include "subghz_read_raw.h"
+#include "subghz_wardiving_read_raw.h"
 
 #define FRAME_HEIGHT 12
 #define MAX_LEN_PX   111
@@ -412,7 +412,7 @@ void subghz_view_receiver_draw(Canvas* canvas, SubGhzViewReceiverModel* model) {
                 AlignBottom,
                 furi_string_get_cstr(model->history_stat_str));
             if(model->show_sats) {
-                canvas_draw_icon(canvas, 118, 54, &I_Sats_6x9);
+                canvas_draw_icon(canvas, 118, 54, &I_sub1_10px);
             } else {
                 canvas_draw_icon(canvas, 116, 53, &I_sub1_10px);
             }
@@ -461,7 +461,7 @@ void subghz_view_receiver_draw(Canvas* canvas, SubGhzViewReceiverModel* model) {
                 AlignBottom,
                 furi_string_get_cstr(model->history_stat_str));
             if(model->show_sats) {
-                canvas_draw_icon(canvas, 118, 54, &I_Sats_6x9);
+                canvas_draw_icon(canvas, 118, 54, &I_sub1_10px);
             } else {
                 canvas_draw_icon(canvas, 116, 53, &I_sub1_10px);
             }
