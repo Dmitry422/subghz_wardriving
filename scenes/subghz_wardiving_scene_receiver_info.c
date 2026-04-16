@@ -236,14 +236,6 @@ bool subghz_scene_receiver_info_on_event(void* context, SceneManagerEvent event)
                 subghz_scene_receiver_info_draw_widget(subghz);
 
                 subghz->state_notifications = SubGhzNotificationStateIDLE;
-
-                // if(!scene_manager_has_previous_scene(subghz->scene_manager, SubGhzSceneDecodeRAW)) {
-                //     subghz_wardiving_txrx_rx_start(subghz->txrx);
-                //     subghz_wardiving_txrx_hopper_unpause(subghz->txrx);
-                //     if(!subghz_wardiving_history_full(subghz->history)) {
-                //         subghz->state_notifications = SubGhzNotificationStateRx;
-                //     }
-                // }
             }
             break;
         default:

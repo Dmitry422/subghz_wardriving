@@ -5,10 +5,6 @@
 #include <lib/toolbox/path.h>
 #include <float_tools.h>
 #include "subghz_wardiving_i.h"
-// #include <applications/main/archive/helpers/archive_helpers_ext.h>
-// #include <momentum/momentum.h>
-
-#include "subghz_fap.h"
 
 #define TAG "SubGhzApp"
 
@@ -380,40 +376,6 @@ int32_t subghz_app(char* p) {
         subghz->raw_send_only = false;
     }
 
-    // // Check argument and run corresponding scene
-    // bool is_favorite = process_favorite_launch(&p) && momentum_settings.favorite_timeout;
-    // if(p && strlen(p)) {
-    //     uint32_t rpc_ctx = 0;
-
-    //     if(sscanf(p, "RPC %lX", &rpc_ctx) == 1) {
-    //         subghz->rpc_ctx = (void*)rpc_ctx;
-    //         rpc_system_app_set_callback(subghz->rpc_ctx, subghz_rpc_command_callback, subghz);
-    //         rpc_system_app_send_started(subghz->rpc_ctx);
-    //         view_dispatcher_attach_to_gui(
-    //             subghz->view_dispatcher, subghz->gui, ViewDispatcherTypeDesktop);
-    //         scene_manager_next_scene(subghz->scene_manager, SubGhzSceneRpc);
-    //     } else {
-    //         view_dispatcher_attach_to_gui(
-    //             subghz->view_dispatcher, subghz->gui, ViewDispatcherTypeFullscreen);
-    //         if(subghz_key_load(subghz, p, true)) {
-    //             furi_string_set(subghz->file_path, (const char*)p);
-
-    //             subghz->fav_timeout = is_favorite;
-    //             if(subghz_get_load_type_file(subghz) == SubGhzLoadTypeFileRaw) {
-    //                 //Load Raw TX
-    //                 subghz_rx_key_state_set(subghz, SubGhzRxKeyStateRAWLoad);
-    //                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneReadRAW);
-    //             } else {
-    //                 //Load transmitter TX
-    //                 scene_manager_next_scene(subghz->scene_manager, SubGhzSceneTransmitter);
-    //             }
-    //         } else {
-    //             //exit app
-    //             scene_manager_stop(subghz->scene_manager);
-    //             view_dispatcher_stop(subghz->view_dispatcher);
-    //         }
-    //     }
-    // } else {
     view_dispatcher_attach_to_gui(
         subghz->view_dispatcher, subghz->gui, ViewDispatcherTypeFullscreen);
     furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);

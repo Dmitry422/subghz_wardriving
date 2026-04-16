@@ -540,163 +540,158 @@ void subghz_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_text(
         item, subghz_setting_get_preset_name(setting, value_index));
 
-    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-    //    SubGhzCustomEventManagerSet) {
-        // Hopping
-        value_index = subghz_scene_receiver_config_hopper_value_index(subghz);
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            value_index ? "Hopping RSSI" : "Hopping",
-            HOPPING_MODE_COUNT,
-            subghz_scene_receiver_config_set_hopping,
-            subghz);
+    // Hopping
+    value_index = subghz_scene_receiver_config_hopper_value_index(subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        value_index ? "Hopping RSSI" : "Hopping",
+        HOPPING_MODE_COUNT,
+        subghz_scene_receiver_config_set_hopping,
+        subghz);
 
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, hopping_mode_text[value_index]);
-    // }
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, hopping_mode_text[value_index]);
 
-    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-    //    SubGhzCustomEventManagerSet) {
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Bin RAW",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_bin_raw,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Bin RAW",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_bin_raw,
+        subghz);
 
-        value_index = value_index_uint32(subghz->filter, bin_raw_value, COMBO_BOX_COUNT);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
-        variable_item_set_locked(
-            item, subghz->repeater != SubGhzRepeaterStateOff, "Turn off\nRepeater\nto do that!");
+    value_index = value_index_uint32(subghz->filter, bin_raw_value, COMBO_BOX_COUNT);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
+    variable_item_set_locked(
+        item, subghz->repeater != SubGhzRepeaterStateOff, "Turn off\nRepeater\nto do that!");
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Repeater",
-            REPEATER_COUNT,
-            subghz_scene_receiver_config_set_repeater,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Repeater",
+        REPEATER_COUNT,
+        subghz_scene_receiver_config_set_repeater,
+        subghz);
 
-        value_index = value_index_uint32(subghz->repeater, repeater_value, REPEATER_COUNT);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, repeater_text[value_index]);
+    value_index = value_index_uint32(subghz->repeater, repeater_value, REPEATER_COUNT);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, repeater_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Remove Duplicates",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_duplicates,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Remove Duplicates",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_duplicates,
+        subghz);
 
-        value_index = subghz->remove_duplicates;
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz->remove_duplicates;
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Delete Old Signals on Full Memory",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_delete_old_signals,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Delete Old Signals on Full Memory",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_delete_old_signals,
+        subghz);
 
-        value_index = subghz->last_settings->delete_old_signals;
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz->last_settings->delete_old_signals;
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Autosave",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_autosave,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Autosave",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_autosave,
+        subghz);
 
-        value_index = subghz->last_settings->autosave;
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz->last_settings->autosave;
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Ignore ReversRB2",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_reversrb2,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Ignore ReversRB2",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_reversrb2,
+        subghz);
 
-        value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-            subghz->ignore_filter, SubGhzProtocolFlag_ReversRB2);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+        subghz->ignore_filter, SubGhzProtocolFlag_ReversRB2);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Ignore Alarms",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_alarms,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Ignore Alarms",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_alarms,
+        subghz);
 
-        value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-            subghz->ignore_filter, SubGhzProtocolFlag_Alarms);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+        subghz->ignore_filter, SubGhzProtocolFlag_Alarms);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Ignore Sensors",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_sensors,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Ignore Sensors",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_sensors,
+        subghz);
 
-        value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-            subghz->ignore_filter, SubGhzProtocolFlag_Sensors);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+        subghz->ignore_filter, SubGhzProtocolFlag_Sensors);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Ignore Princeton",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_princeton,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Ignore Princeton",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_princeton,
+        subghz);
 
-        value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-            subghz->ignore_filter, SubGhzProtocolFlag_Princeton);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+        subghz->ignore_filter, SubGhzProtocolFlag_Princeton);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "Ignore Nice Flor-S / Nice One",
-            COMBO_BOX_COUNT,
-            subghz_scene_receiver_config_set_niceflors,
-            subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "Ignore Nice Flor-S / Nice One",
+        COMBO_BOX_COUNT,
+        subghz_scene_receiver_config_set_niceflors,
+        subghz);
 
-        value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-            subghz->ignore_filter, SubGhzProtocolFlag_NiceFlorS);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, combobox_text[value_index]);
+    value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+        subghz->ignore_filter, SubGhzProtocolFlag_NiceFlorS);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        // item = variable_item_list_add(
-        //     subghz->variable_item_list,
-        //     "Ignore Weather",
-        //     COMBO_BOX_COUNT,
-        //     subghz_scene_receiver_config_set_weather,
-        //     subghz);
+    // item = variable_item_list_add(
+    //     subghz->variable_item_list,
+    //     "Ignore Weather",
+    //     COMBO_BOX_COUNT,
+    //     subghz_scene_receiver_config_set_weather,
+    //     subghz);
 
-        // value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-        //     subghz->ignore_filter, SubGhzProtocolFilter_Weather);
-        // variable_item_set_current_value_index(item, value_index);
-        // variable_item_set_current_value_text(item, combobox_text[value_index]);
+    // value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+    //     subghz->ignore_filter, SubGhzProtocolFilter_Weather);
+    // variable_item_set_current_value_index(item, value_index);
+    // variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-        // item = variable_item_list_add(
-        //     subghz->variable_item_list,
-        //     "Ignore TPMS",
-        //     COMBO_BOX_COUNT,
-        //     subghz_scene_receiver_config_set_tpms,
-        //     subghz);
+    // item = variable_item_list_add(
+    //     subghz->variable_item_list,
+    //     "Ignore TPMS",
+    //     COMBO_BOX_COUNT,
+    //     subghz_scene_receiver_config_set_tpms,
+    //     subghz);
 
-        // value_index = subghz_scene_receiver_config_ignore_filter_get_index(
-        //     subghz->ignore_filter, SubGhzProtocolFilter_TPMS);
-        // variable_item_set_current_value_index(item, value_index);
-        // variable_item_set_current_value_text(item, combobox_text[value_index]);
+    // value_index = subghz_scene_receiver_config_ignore_filter_get_index(
+    //     subghz->ignore_filter, SubGhzProtocolFilter_TPMS);
+    // variable_item_set_current_value_index(item, value_index);
+    // variable_item_set_current_value_text(item, combobox_text[value_index]);
     // }
 
     // Enable speaker, will send all incoming noises and signals to speaker so you can listen how your remote sounds like :)
@@ -711,41 +706,27 @@ void subghz_scene_receiver_config_on_enter(void* context) {
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, combobox_text[value_index]);
 
-    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-    //    SubGhzCustomEventManagerSet) {
-        // Reset to default
-        variable_item_list_add(subghz->variable_item_list, "Reset to Default", 1, NULL, NULL);
+    // Reset to default
+    variable_item_list_add(subghz->variable_item_list, "Reset to Default", 1, NULL, NULL);
 
-        variable_item_list_set_enter_callback(
-            subghz->variable_item_list,
-            subghz_scene_receiver_config_var_list_enter_callback,
-            subghz);
-    // }
-    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=
-    //    SubGhzCustomEventManagerSet) {
-        // Lock keyboard
-        variable_item_list_add(subghz->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
-        variable_item_list_set_enter_callback(
-            subghz->variable_item_list,
-            subghz_scene_receiver_config_var_list_enter_callback,
-            subghz);
-    // }
-
-    // if(scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) ==
-    //    SubGhzCustomEventManagerSet) {
-        item = variable_item_list_add(
-            subghz->variable_item_list,
-            "RSSI Threshold:",
-            RAW_THRESHOLD_RSSI_COUNT,
-            subghz_scene_receiver_config_set_raw_threshold_rssi,
-            subghz);
-        value_index = value_index_float(
-            subghz_threshold_rssi_get(subghz->threshold_rssi),
-            raw_threshold_rssi_value,
-            RAW_THRESHOLD_RSSI_COUNT);
-        variable_item_set_current_value_index(item, value_index);
-        variable_item_set_current_value_text(item, raw_threshold_rssi_text[value_index]);
-    // }
+    variable_item_list_set_enter_callback(
+        subghz->variable_item_list, subghz_scene_receiver_config_var_list_enter_callback, subghz);
+    // Lock keyboard
+    variable_item_list_add(subghz->variable_item_list, "Lock Keyboard", 1, NULL, NULL);
+    variable_item_list_set_enter_callback(
+        subghz->variable_item_list, subghz_scene_receiver_config_var_list_enter_callback, subghz);
+    item = variable_item_list_add(
+        subghz->variable_item_list,
+        "RSSI Threshold:",
+        RAW_THRESHOLD_RSSI_COUNT,
+        subghz_scene_receiver_config_set_raw_threshold_rssi,
+        subghz);
+    value_index = value_index_float(
+        subghz_threshold_rssi_get(subghz->threshold_rssi),
+        raw_threshold_rssi_value,
+        RAW_THRESHOLD_RSSI_COUNT);
+    variable_item_set_current_value_index(item, value_index);
+    variable_item_set_current_value_text(item, raw_threshold_rssi_text[value_index]);
 
     variable_item_list_set_selected_item(
         subghz->variable_item_list,
@@ -791,6 +772,4 @@ void subghz_scene_receiver_config_on_exit(void* context) {
     variable_item_list_reset(subghz->variable_item_list);
 
     subghz_last_settings_save(subghz->last_settings);
-    // scene_manager_set_scene_state(
-    //     subghz->scene_manager, SubGhzSceneReadRAW, SubGhzCustomEventManagerNoSet);
 }
