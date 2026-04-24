@@ -99,9 +99,9 @@ static void subghz_scene_receiver_update_statusbar(void* context) {
     } else {
         subghz_view_receiver_add_data_statusbar(
             subghz->subghz_receiver,
+            "",
+            "",
             furi_string_get_cstr(history_stat_str),
-            "",
-            "",
             subghz_wardriving_txrx_hopper_get_state(subghz->txrx) != SubGhzHopperStateOFF,
             READ_BIT(subghz->filter, SubGhzProtocolFlag_BinRAW) > 0,
             show_sats,
@@ -220,7 +220,7 @@ static void subghz_scene_add_to_history_callback(
                 DateTime time = subghz_wardriving_history_get_datetime(history, idx);
                 name_generator_make_detailed_datetime(file, sizeof(file), suf, &time);
                 // Dir name
-                FuriString* path = furi_string_alloc_set(SUBGHZ_APP_FOLDER "/Autosave");
+                FuriString* path = furi_string_alloc_set(SUBGHZ_WARDR_APP_FOLDER "/autosaved");
                 char* dir = strdup(furi_string_get_cstr(path));
                 // Find non-existent path
                 const char* ext = SUBGHZ_APP_FILENAME_EXTENSION;

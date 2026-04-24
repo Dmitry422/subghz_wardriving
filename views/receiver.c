@@ -7,6 +7,8 @@
 #include <assets_icons.h>
 #include <m-array.h>
 
+#include <subghz_wardriving_icons.h>
+
 #define FRAME_HEIGHT 12
 #define MAX_LEN_PX   111
 #define MENU_ITEMS   4u
@@ -433,8 +435,10 @@ void subghz_view_receiver_draw(Canvas* canvas, SubGhzViewReceiverModel* model) {
         canvas_draw_str(canvas, 44, 62, frequency_str);
 #ifdef SUBGHZ_EXT_PRESET_NAME
         if(model->history_item == 0 && model->mode == SubGhzViewReceiverModeLive) {
-            canvas_draw_str(
-                canvas, 44 + canvas_string_width(canvas, frequency_str) + 1, 62, "MHz");
+            if(*frequency_str) {
+                canvas_draw_str(
+                    canvas, 44 + canvas_string_width(canvas, frequency_str) + 1, 62, "MHz");
+            }
             const char* str = furi_string_get_cstr(model->preset_str);
             const uint8_t vertical_offset = 7;
             const uint8_t horizontal_offset = 3;
@@ -459,7 +463,7 @@ void subghz_view_receiver_draw(Canvas* canvas, SubGhzViewReceiverModel* model) {
                 AlignBottom,
                 furi_string_get_cstr(model->history_stat_str));
             if(model->show_sats) {
-                canvas_draw_icon(canvas, 118, 54, &I_sub1_10px);
+                canvas_draw_icon(canvas, 118, 54, &I_Sats_6x9);
             } else {
                 canvas_draw_icon(canvas, 116, 53, &I_sub1_10px);
             }

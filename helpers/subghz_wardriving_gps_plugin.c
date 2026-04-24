@@ -18,7 +18,7 @@ SubGhzGPS* subghz_gps_plugin_init(uint32_t baudrate) {
     FlipperApplication* plugin_app = flipper_application_alloc(storage, firmware_api_interface);
     do {
         FlipperApplicationPreloadStatus preload_res = flipper_application_preload(
-            plugin_app, EXT_PATH("apps_data/subghz_gps/plugins/subghz_gps.fal"));
+            plugin_app, APP_ASSETS_PATH("plugins/subghz_plugin_gps.fal"));
 
         if(preload_res != FlipperApplicationPreloadStatusSuccess) {
             FURI_LOG_E(TAG, "Failed to preload GPS plugin. Code: %d\r\n", preload_res);
@@ -39,7 +39,7 @@ SubGhzGPS* subghz_gps_plugin_init(uint32_t baudrate) {
         const FlipperAppPluginDescriptor* app_descriptor =
             flipper_application_plugin_get_descriptor(plugin_app);
 
-        if(strcmp(app_descriptor->appid, "subghz_gps") != 0) {
+        if(strcmp(app_descriptor->appid, "subghz_plugin_gps") != 0) {
             FURI_LOG_E(TAG, "GPS plugin type doesn't match\r\n");
             break;
         }

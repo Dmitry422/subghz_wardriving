@@ -160,7 +160,7 @@ bool subghz_key_load(SubGhz* subghz, const char* file_path, bool show_dialog) {
         flipper_format_set_strict_mode(fff_data_file, false);
 
         //Avoid null island when reading
-        if(temp_lat == 0.0 && temp_lon == 0.0) {
+        if(temp_lat == (float)0.0 && temp_lon == (float)0.0) {
             temp_lat = NAN;
             temp_lon = NAN;
         }
@@ -365,7 +365,7 @@ bool subghz_load_protocol_from_file(SubGhz* subghz) {
     DialogsFileBrowserOptions browser_options;
     dialog_file_browser_set_basic_options(
         &browser_options, SUBGHZ_APP_FILENAME_EXTENSION, &I_sub1_10px);
-    browser_options.base_path = SUBGHZ_APP_FOLDER;
+    browser_options.base_path = SUBGHZ_WARDR_APP_FOLDER;
 
     // Input events and views are managed by file_select
     bool res = dialog_file_browser_show(
@@ -433,7 +433,7 @@ bool subghz_delete_file(SubGhz* subghz) {
 
 void subghz_file_name_clear(SubGhz* subghz) {
     furi_assert(subghz);
-    furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);
+    furi_string_set(subghz->file_path, SUBGHZ_WARDR_APP_FOLDER);
     furi_string_reset(subghz->file_path_tmp);
 }
 

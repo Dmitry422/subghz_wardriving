@@ -37,7 +37,7 @@ void subghz_scene_save_name_on_enter(void* context) {
                 file_name_buf, SUBGHZ_MAX_LEN_NAME, SUBGHZ_APP_FILENAME_PREFIX, datetime);
         }
         furi_string_set(file_name, file_name_buf);
-        furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);
+        furi_string_set(subghz->file_path, SUBGHZ_WARDR_APP_FOLDER);
         //highlighting the entire filename by default
         dev_name_empty = true;
     } else {
@@ -87,7 +87,7 @@ bool subghz_scene_save_name_on_event(void* context, SceneManagerEvent event) {
     SubGhz* subghz = context;
     if(event.type == SceneManagerEventTypeBack) {
         // Set file path to default
-        furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);
+        furi_string_set(subghz->file_path, SUBGHZ_WARDR_APP_FOLDER);
         //
         // if(!(strcmp(subghz->file_name_tmp, "") == 0) ||
         //    scene_manager_get_scene_state(subghz->scene_manager, SubGhzSceneReadRAW) !=

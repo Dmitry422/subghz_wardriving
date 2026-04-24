@@ -5,7 +5,7 @@
 
 #define SUBGHZ_LAST_SETTING_FILE_TYPE    "Flipper SubGhz Last Setting File"
 #define SUBGHZ_LAST_SETTING_FILE_VERSION 3
-#define SUBGHZ_LAST_SETTINGS_PATH        EXT_PATH("subghz/assets/subghz_wardriving_last.settings")
+#define SUBGHZ_LAST_SETTINGS_PATH        APP_DATA_PATH("subghz_wardriving_last.settings")
 
 #define SUBGHZ_LAST_SETTING_FIELD_FREQUENCY                         "Frequency"
 #define SUBGHZ_LAST_SETTING_FIELD_PRESET                            "Preset" // AKA Modulation
@@ -26,17 +26,17 @@
 #define SUBGHZ_LAST_SETTING_FIELD_HOPPING_THRESHOLD "HoppingThreshold"
 #define SUBGHZ_LAST_SETTING_FIELD_TX_POWER          "TXPower"
 
-SubGhzLastSettings* subghz_last_settings_alloc(void) {
+SubGhzLastSettings* subghz_wardriving_last_settings_alloc(void) {
     SubGhzLastSettings* instance = malloc(sizeof(SubGhzLastSettings));
     return instance;
 }
 
-void subghz_last_settings_free(SubGhzLastSettings* instance) {
+void subghz_wardriving_last_settings_free(SubGhzLastSettings* instance) {
     furi_assert(instance);
     free(instance);
 }
 
-void subghz_last_settings_load(SubGhzLastSettings* instance, size_t preset_count) {
+void subghz_wardriving_last_settings_load(SubGhzLastSettings* instance, size_t preset_count) {
     furi_assert(instance);
 
     // Default values (all others set to 0, if read from file fails these are used)
@@ -189,7 +189,7 @@ void subghz_last_settings_load(SubGhzLastSettings* instance, size_t preset_count
     }
 }
 
-bool subghz_last_settings_save(SubGhzLastSettings* instance) {
+bool subghz_wardriving_last_settings_save(SubGhzLastSettings* instance) {
     furi_assert(instance);
 
     bool saved = false;

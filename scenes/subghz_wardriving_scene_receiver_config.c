@@ -7,7 +7,6 @@ enum SubGhzSettingIndex {
     SubGhzSettingIndexFrequency,
     SubGhzSettingIndexModulation,
     SubGhzSettingIndexHopping,
-    SubGhzSettingIndexRAWSound = SubGhzSettingIndexHopping,
     SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRAWRSSIThreshold = SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRepeater,
@@ -318,7 +317,7 @@ static void subghz_scene_receiver_config_set_bin_raw(VariableItem* item) {
     subghz->filter = bin_raw_value[index];
     subghz_wardriving_txrx_receiver_set_filter(subghz->txrx, subghz->filter);
 
-    // We can set here, but during subghz_last_settings_save filter was changed to ignore BinRAW
+    // We can set here, but during subghz_wardriving_last_settings_save filter was changed to ignore BinRAW
     subghz->last_settings->filter = subghz->filter;
 
     //If the user changed BinRAW menu, dont reset it with the repeater.
@@ -360,7 +359,7 @@ static void subghz_scene_receiver_config_set_repeater(VariableItem* item) {
         }
 
         //Lock the BinRAW menu, Flipper doesnt understand everything so BinRAW makes every key send.
-        variable_item_set_locked(bin_raw_menu, true, NULL);
+        variable_item_set_locked(bin_raw_menu, true, "Turn off\nRepeater\nto do that!");
     } else {
         //Put BinRAW back how it was, if we changed it.
         if(subghz->repeater_bin_raw_was_off) {
@@ -496,7 +495,7 @@ static void subghz_scene_receiver_config_var_list_enter_callback(void* context, 
         variable_item_list_set_selected_item(subghz->variable_item_list, default_index);
         variable_item_list_reset(subghz->variable_item_list);
 
-        subghz_last_settings_save(subghz->last_settings);
+        subghz_wardriving_last_settings_save(subghz->last_settings);
 
         view_dispatcher_send_custom_event(
             subghz->view_dispatcher, SubGhzCustomEventSceneSettingResetToDefault);
@@ -771,5 +770,5 @@ void subghz_scene_receiver_config_on_exit(void* context) {
     variable_item_list_set_selected_item(subghz->variable_item_list, 0);
     variable_item_list_reset(subghz->variable_item_list);
 
-    subghz_last_settings_save(subghz->last_settings);
+    subghz_wardriving_last_settings_save(subghz->last_settings);
 }

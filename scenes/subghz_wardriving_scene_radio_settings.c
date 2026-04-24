@@ -20,15 +20,10 @@ const char* const on_off_text[ON_OFF_COUNT] = {
     "ON",
 };
 
-#define DEBUG_P_COUNT 2
-const char* const debug_pin_text[DEBUG_P_COUNT] = {
-    "OFF",
-    "17(1W)",
-};
-
-#define GPS_COUNT 6
+#define GPS_COUNT 7
 const char* const gps_text[GPS_COUNT] = {
     "OFF",
+    "4800",
     "9600",
     "19200",
     "38400",
@@ -115,16 +110,7 @@ static void subghz_scene_radio_settings_set_tx_power(VariableItem* item) {
     subghz->last_settings->tx_power = subghz->tx_power = index;
 
     //Save the settings now, this is the convention here!
-    subghz_last_settings_save(subghz->last_settings);
-}
-
-static void subghz_scene_receiver_config_set_debug_pin(VariableItem* item) {
-    SubGhz* subghz = variable_item_get_context(item);
-    uint8_t index = variable_item_get_current_value_index(item);
-
-    variable_item_set_current_value_text(item, debug_pin_text[index]);
-
-    subghz_wardriving_txrx_set_debug_pin_state(subghz->txrx, index == 1);
+    subghz_wardriving_last_settings_save(subghz->last_settings);
 }
 
 static void subghz_scene_receiver_config_set_debug_counter(VariableItem* item) {
@@ -145,22 +131,25 @@ static void subghz_scene_receiver_config_set_gps(VariableItem* item) {
         subghz->last_settings->gps_baudrate = 0;
         break;
     case 1:
-        subghz->last_settings->gps_baudrate = 9600;
+        subghz->last_settings->gps_baudrate = 4800;
         break;
     case 2:
-        subghz->last_settings->gps_baudrate = 19200;
+        subghz->last_settings->gps_baudrate = 9600;
         break;
     case 3:
-        subghz->last_settings->gps_baudrate = 38400;
+        subghz->last_settings->gps_baudrate = 19200;
         break;
     case 4:
-        subghz->last_settings->gps_baudrate = 57600;
+        subghz->last_settings->gps_baudrate = 38400;
         break;
     case 5:
+        subghz->last_settings->gps_baudrate = 57600;
+        break;
+    case 6:
         subghz->last_settings->gps_baudrate = 115200;
         break;
     }
-    subghz_last_settings_save(subghz->last_settings);
+    subghz_wardriving_last_settings_save(subghz->last_settings);
 
     if(subghz->gps) {
         subghz_gps_plugin_deinit(subghz->gps);
@@ -178,7 +167,7 @@ static void subghz_scene_receiver_config_set_protocol_file_names(VariableItem* i
     variable_item_set_current_value_text(item, on_off_text[index]);
 
     subghz->last_settings->protocol_file_names = (index == 1);
-    subghz_last_settings_save(subghz->last_settings);
+    subghz_wardriving_last_settings_save(subghz->last_settings);
 }
 
 void subghz_scene_radio_settings_on_enter(void* context) {
@@ -226,7 +215,7 @@ void subghz_scene_radio_settings_on_enter(void* context) {
         subghz);
     value_index = value_index_uint32(
         subghz->last_settings->gps_baudrate,
-        (const uint32_t[]){0, 9600, 19200, 38400, 57600, 115200},
+        (const uint32_t[]){0, 4800, 9600, 19200, 38400, 57600, 115200},
         GPS_COUNT);
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, gps_text[value_index]);
@@ -255,23 +244,6 @@ void subghz_scene_radio_settings_on_enter(void* context) {
 
     variable_item_set_current_value_index(item, value_index);
     variable_item_set_current_value_text(item, debug_counter_text[value_index]);
-
-    item = variable_item_list_add(
-        variable_item_list,
-        "Debug Pin",
-        DEBUG_P_COUNT,
-        subghz_scene_receiver_config_set_debug_pin,
-        subghz);
-    value_index = subghz_wardriving_txrx_get_debug_pin_state(subghz->txrx);
-    variable_item_set_current_value_index(item, value_index);
-    variable_item_set_current_value_text(item, debug_pin_text[value_index]);
-    variable_item_set_locked(
-        item,
-        !furi_hal_rtc_is_flag_set(FuriHalRtcFlagDebug),
-        "Enable\n"
-        "Settings >\n"
-        "System >\n"
-        "Debug");
 
     view_dispatcher_switch_to_view(subghz->view_dispatcher, SubGhzViewIdVariableItemList);
 }

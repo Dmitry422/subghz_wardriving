@@ -51,12 +51,6 @@ bool subghz_scene_transmitter_update_data_show(void* context) {
     return ret;
 }
 
-void fav_timer_callback(void* context) {
-    SubGhz* subghz = context;
-    scene_manager_handle_custom_event(
-        subghz->scene_manager, SubGhzCustomEventViewTransmitterSendStop);
-}
-
 void subghz_scene_transmitter_on_enter(void* context) {
     SubGhz* subghz = context;
 
@@ -72,16 +66,6 @@ void subghz_scene_transmitter_on_enter(void* context) {
 
     subghz->state_notifications = SubGhzNotificationStateIDLE;
     view_dispatcher_switch_to_view(subghz->view_dispatcher, SubGhzViewIdTransmitter);
-
-    // // Auto send and exit with favorites
-    // if(subghz->fav_timeout) {
-    //     furi_check(!subghz->timer, "SubGhz fav timer exists");
-    //     subghz->timer = furi_timer_alloc(fav_timer_callback, FuriTimerTypeOnce, subghz);
-    //     scene_manager_handle_custom_event(
-    //         subghz->scene_manager, SubGhzCustomEventViewTransmitterSendStart);
-    //     furi_timer_start(
-    //         subghz->timer, momentum_settings.favorite_timeout * furi_kernel_get_tick_frequency());
-    // }
 }
 
 bool subghz_scene_transmitter_on_event(void* context, SceneManagerEvent event) {
@@ -137,11 +121,6 @@ bool subghz_scene_transmitter_on_event(void* context, SceneManagerEvent event) {
                     subghz_tx_start(subghz, subghz_wardriving_txrx_get_fff_data(subghz->txrx));
                     subghz_wardriving_txrx_stop(subghz->txrx);
                     furi_hal_subghz_set_rolling_counter_mult(tmp_counter);
-                }
-                if(subghz->fav_timeout) {
-                    while(scene_manager_handle_back_event(subghz->scene_manager))
-                        ;
-                    view_dispatcher_stop(subghz->view_dispatcher);
                 }
             }
         }

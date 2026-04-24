@@ -26,37 +26,6 @@ void subghz_tick_event_callback(void* context) {
     scene_manager_handle_tick_event(subghz->scene_manager);
 }
 
-// static void subghz_rpc_command_callback(const RpcAppSystemEvent* event, void* context) {
-//     furi_assert(context);
-//     SubGhz* subghz = context;
-
-//     furi_assert(subghz->rpc_ctx);
-
-//     if(event->type == RpcAppEventTypeSessionClose) {
-//         view_dispatcher_send_custom_event(
-//             subghz->view_dispatcher, SubGhzCustomEventSceneRpcSessionClose);
-//         rpc_system_app_set_callback(subghz->rpc_ctx, NULL, NULL);
-//         subghz->rpc_ctx = NULL;
-//     } else if(event->type == RpcAppEventTypeAppExit) {
-//         view_dispatcher_send_custom_event(subghz->view_dispatcher, SubGhzCustomEventSceneExit);
-//     } else if(event->type == RpcAppEventTypeLoadFile) {
-//         furi_assert(event->data.type == RpcAppSystemEventDataTypeString);
-//         furi_string_set(subghz->file_path, event->data.string);
-//         view_dispatcher_send_custom_event(subghz->view_dispatcher, SubGhzCustomEventSceneRpcLoad);
-//     } else if(event->type == RpcAppEventTypeButtonPress) {
-//         view_dispatcher_send_custom_event(
-//             subghz->view_dispatcher, SubGhzCustomEventSceneRpcButtonPress);
-//     } else if(event->type == RpcAppEventTypeButtonRelease) {
-//         view_dispatcher_send_custom_event(
-//             subghz->view_dispatcher, SubGhzCustomEventSceneRpcButtonRelease);
-//     } else if(event->type == RpcAppEventTypeButtonPressRelease) {
-//         view_dispatcher_send_custom_event(
-//             subghz->view_dispatcher, SubGhzCustomEventSceneRpcButtonPressRelease);
-//     } else {
-//         rpc_system_app_confirm(subghz->rpc_ctx, false);
-//     }
-// }
-
 SubGhz* subghz_alloc(bool alloc_for_tx_only) {
     SubGhz* subghz = malloc(sizeof(SubGhz));
 
@@ -149,9 +118,9 @@ SubGhz* subghz_alloc(bool alloc_for_tx_only) {
     SubGhzSetting* setting = subghz_wardriving_txrx_get_setting(subghz->txrx);
 
     // Load last used values for Read, Read RAW, etc. or default
-    subghz->last_settings = subghz_last_settings_alloc();
+    subghz->last_settings = subghz_wardriving_last_settings_alloc();
     size_t preset_count = subghz_setting_get_preset_count(setting);
-    subghz_last_settings_load(subghz->last_settings, preset_count);
+    subghz_wardriving_last_settings_load(subghz->last_settings, preset_count);
     if(!alloc_for_tx_only) {
         // Make sure we select a frequency available in loaded setting configuration
         uint32_t last_frequency = subghz->last_settings->frequency;
@@ -310,7 +279,7 @@ void subghz_free(SubGhz* subghz, bool alloc_for_tx_only) {
         subghz_gps_plugin_deinit(subghz->gps);
     }
 
-    subghz_last_settings_free(subghz->last_settings);
+    subghz_wardriving_last_settings_free(subghz->last_settings);
 
     // The rest
     free(subghz);
@@ -334,7 +303,7 @@ int32_t subghz_app(char* p) {
 
     view_dispatcher_attach_to_gui(
         subghz->view_dispatcher, subghz->gui, ViewDispatcherTypeFullscreen);
-    furi_string_set(subghz->file_path, SUBGHZ_APP_FOLDER);
+    furi_string_set(subghz->file_path, SUBGHZ_WARDR_APP_FOLDER);
     if(subghz_wardriving_txrx_is_database_loaded(subghz->txrx)) {
         scene_manager_next_scene(subghz->scene_manager, SubGhzSceneStart);
     } else {

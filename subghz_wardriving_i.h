@@ -46,6 +46,8 @@
 
 #define SUBGHZ_RAW_THRESHOLD_MIN (-90.0f)
 
+#define SUBGHZ_WARDR_APP_FOLDER EXT_PATH("subghz/wardriving")
+
 struct SubGhz {
     Gui* gui;
     NotificationApp* notifications;
@@ -95,7 +97,6 @@ struct SubGhz {
     uint16_t idx_menu_chosen;
     SubGhzLoadTypeFile load_type_file;
 
-    bool fav_timeout;
     FuriTimer* timer;
 
     uint8_t tx_power;

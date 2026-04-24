@@ -1,11 +1,13 @@
 #include "subghz_wardriving_history.h"
 #include <lib/subghz/receiver.h>
 #include <rpc/rpc.h>
+#include <toolbox/stream/stream.h>
+#include <flipper_format/flipper_format.h>
 
 #include <furi.h>
 
-#define SUBGHZ_HISTORY_MAX       55
-#define SUBGHZ_HISTORY_FREE_HEAP 20480
+#define SUBGHZ_HISTORY_MAX       25
+#define SUBGHZ_HISTORY_FREE_HEAP (2048)
 #define TAG                      "SubGhzHistory"
 
 typedef struct {
@@ -186,6 +188,30 @@ FlipperFormat* subghz_wardriving_history_get_raw_data(SubGhzHistory* instance, u
     furi_assert(instance);
     SubGhzHistoryItem* item = SubGhzHistoryItemArray_get(instance->history->data, idx);
     if(item->flipper_string) {
+        //Update latitude and longitude if present
+        float temp_lat = NAN;
+        float temp_lon = NAN;
+
+        temp_lat = item->latitude;
+        temp_lon = item->longitude;
+
+        if(!flipper_format_insert_or_update_float(
+               item->flipper_string, "Lat", (float*)&temp_lat, 1) ||
+           !flipper_format_insert_or_update_float(
+               item->flipper_string, "Lon", (float*)&temp_lon, 1)) {
+            flipper_format_rewind(item->flipper_string);
+            //Fallback to older keys "Latitute", "Longitude"
+            if(!flipper_format_insert_or_update_float(
+                   item->flipper_string, "Latitute", (float*)&temp_lat, 1) ||
+               !flipper_format_insert_or_update_float(
+                   item->flipper_string, "Longitude", (float*)&temp_lon, 1)) {
+                FURI_LOG_W(TAG, "Problem updating Lat and Lon (optional)");
+                flipper_format_rewind(item->flipper_string);
+            }
+        } else {
+            flipper_format_rewind(item->flipper_string);
+        }
+
         return item->flipper_string;
     } else {
         return NULL;
@@ -200,11 +226,11 @@ bool subghz_wardriving_history_get_text_space_left(
     furi_assert(instance);
     if(!ignore_full) {
         if(memmgr_get_free_heap() < SUBGHZ_HISTORY_FREE_HEAP) {
-            if(output != NULL) furi_string_printf(output, "    Memory is FULL");
+            if(output != NULL) furi_string_set(output, "Memory is FULL");
             return true;
         }
         if(instance->last_index_write == SUBGHZ_HISTORY_MAX) {
-            if(output != NULL) furi_string_printf(output, "     History is FULL");
+            if(output != NULL) furi_string_set(output, "History is FULL");
             return true;
         }
     }
@@ -317,13 +343,6 @@ bool subghz_wardriving_history_add_to_history(
         }
         if(!strcmp(furi_string_get_cstr(instance->tmp_string), "KeeLoq")) {
             furi_string_set(instance->tmp_string, "KL ");
-            if(!flipper_format_read_string(item->flipper_string, "Manufacture", text)) {
-                FURI_LOG_E(TAG, "Missing Protocol");
-                break;
-            }
-            furi_string_cat(instance->tmp_string, text);
-        } else if(!strcmp(furi_string_get_cstr(instance->tmp_string), "Star Line")) {
-            furi_string_set(instance->tmp_string, "SL ");
             if(!flipper_format_read_string(item->flipper_string, "Manufacture", text)) {
                 FURI_LOG_E(TAG, "Missing Protocol");
                 break;
