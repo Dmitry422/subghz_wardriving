@@ -71,9 +71,6 @@ struct SubGhz {
     SubGhzViewReceiver* subghz_receiver;
     SubGhzViewTransmitter* subghz_transmitter;
     VariableItemList* variable_item_list;
-
-    bool raw_send_only;
-
     bool save_datetime_set;
     DateTime save_datetime;
 
@@ -84,8 +81,6 @@ struct SubGhz {
     bool remove_duplicates;
     FuriString* error_str;
     SubGhzLock lock;
-
-    SubGhzFileEncoderWorker* decode_raw_file_worker_encoder;
 
     SubGhzThresholdRssi* threshold_rssi;
     SubGhzRxKeyState rx_key_state;
@@ -100,7 +95,6 @@ struct SubGhz {
     FuriTimer* timer;
 
     uint8_t tx_power;
-    void* rpc_ctx;
 };
 
 void subghz_blink_start(SubGhz* subghz);

@@ -5,19 +5,19 @@
 
 enum SubGhzSettingIndex {
     SubGhzSettingIndexFrequency,
-    SubGhzSettingIndexModulation,
     SubGhzSettingIndexHopping,
+    SubGhzSettingIndexModulation,
     SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRAWRSSIThreshold = SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRepeater,
     SubGhzSettingIndexRemoveDuplicates,
-    SubGhzSettingIndexDeleteOldSignals,
     SubGhzSettingIndexAutosave,
     SubGhzSettingIndexIgnoreReversRB2,
     SubGhzSettingIndexIgnoreAlarms,
     SubGhzSettingIndexIgnoreSensors,
     SubGhzSettingIndexIgnorePrinceton,
     SubGhzSettingIndexIgnoreNiceFlorS,
+    SubGhzSettingIndexDeleteOldSignals,
     // SubGhzSettingIndexIgnoreWeather,
     // SubGhzSettingIndexIgnoreTPMS,
     SubGhzSettingIndexSound,
@@ -54,28 +54,6 @@ const float raw_threshold_rssi_value[RAW_THRESHOLD_RSSI_COUNT] = {
     -40.0f,
 };
 
-#define COMBO_BOX_COUNT 2
-
-const uint32_t hopping_value[COMBO_BOX_COUNT] = {
-    SubGhzHopperStateOFF,
-    SubGhzHopperStateRunning,
-};
-
-const uint32_t speaker_value[COMBO_BOX_COUNT] = {
-    SubGhzSpeakerStateShutdown,
-    SubGhzSpeakerStateEnable,
-};
-
-const uint32_t bin_raw_value[COMBO_BOX_COUNT] = {
-    SubGhzProtocolFlag_Decodable,
-    SubGhzProtocolFlag_Decodable | SubGhzProtocolFlag_BinRAW,
-};
-
-const char* const combobox_text[COMBO_BOX_COUNT] = {
-    "OFF",
-    "ON",
-};
-
 #define HOPPING_MODE_COUNT 12
 const char* const hopping_mode_text[HOPPING_MODE_COUNT] = {
     "OFF",
@@ -107,6 +85,28 @@ const float hopping_mode_value[HOPPING_MODE_COUNT] = {
     -40.0f,
 };
 
+#define COMBO_BOX_COUNT 2
+
+const uint32_t hopping_value[COMBO_BOX_COUNT] = {
+    SubGhzHopperStateOFF,
+    SubGhzHopperStateRunning,
+};
+
+const uint32_t speaker_value[COMBO_BOX_COUNT] = {
+    SubGhzSpeakerStateShutdown,
+    SubGhzSpeakerStateEnable,
+};
+
+const uint32_t bin_raw_value[COMBO_BOX_COUNT] = {
+    SubGhzProtocolFlag_Decodable,
+    SubGhzProtocolFlag_Decodable | SubGhzProtocolFlag_BinRAW,
+};
+
+const char* const combobox_text[COMBO_BOX_COUNT] = {
+    "OFF",
+    "ON",
+};
+
 #define REPEATER_COUNT 4
 const char* const repeater_text[REPEATER_COUNT] = {
     "OFF",
@@ -135,7 +135,7 @@ static void
     }
 
     subghz->last_settings->ignore_filter = subghz->ignore_filter;
-    //subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
+    subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
 }
 
 uint8_t subghz_scene_receiver_config_next_frequency(const uint32_t value, void* context) {
@@ -476,7 +476,7 @@ static void subghz_scene_receiver_config_var_list_enter_callback(void* context, 
         subghz->ignore_filter = 0x00;
         subghz->remove_duplicates = false;
         subghz_wardriving_txrx_receiver_set_filter(subghz->txrx, subghz->filter);
-        //subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
+        subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
         subghz->last_settings->remove_duplicates = subghz->remove_duplicates;
         subghz->last_settings->ignore_filter = subghz->ignore_filter;
         subghz->last_settings->filter = subghz->filter;

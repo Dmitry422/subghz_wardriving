@@ -271,7 +271,7 @@ void subghz_scene_receiver_on_enter(void* context) {
         subghz->filter = subghz->last_settings->filter;
         subghz_wardriving_txrx_receiver_set_filter(subghz->txrx, subghz->filter);
         subghz->ignore_filter = subghz->last_settings->ignore_filter;
-        //subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
+        subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
         subghz->tx_power = subghz->last_settings->tx_power;
 
         subghz_wardriving_history_reset(history);

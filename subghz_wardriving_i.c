@@ -1,5 +1,4 @@
 #include "subghz_wardriving_i.h"
-
 #include "assets_icons.h"
 #include "subghz/types.h"
 #include <furi.h>

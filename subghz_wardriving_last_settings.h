@@ -16,8 +16,6 @@
 typedef struct {
     uint32_t frequency;
     uint32_t preset_index; // AKA Modulation
-    uint32_t frequency_analyzer_feedback_level;
-    float frequency_analyzer_trigger;
     bool protocol_file_names;
     bool enable_hopping;
     uint32_t ignore_filter;
