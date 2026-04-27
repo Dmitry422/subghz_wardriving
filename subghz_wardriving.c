@@ -148,13 +148,12 @@ SubGhz* subghz_alloc() {
     subghz->tx_power = subghz->last_settings->tx_power;
 
     subghz_wardriving_txrx_receiver_set_filter(subghz->txrx, subghz->filter);
-    subghz_wardriving_txrx_receiver_set_ignore_filter(subghz->txrx, subghz->ignore_filter);
     subghz_wardriving_txrx_set_need_save_callback(subghz->txrx, subghz_save_to_file, subghz);
 
     if(!float_is_equal(subghz->last_settings->rssi, 0)) {
         subghz_threshold_rssi_set(subghz->threshold_rssi, subghz->last_settings->rssi);
     } else {
-        subghz->last_settings->rssi = SUBGHZ_LAST_SETTING_FREQUENCY_ANALYZER_TRIGGER;
+        subghz->last_settings->rssi = (-93.0f);
     }
 #if SUBGHZ_MEASURE_LOADING
     load_ticks = furi_get_tick() - load_ticks;

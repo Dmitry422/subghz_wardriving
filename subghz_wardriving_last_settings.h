@@ -6,12 +6,10 @@
 #include <storage/storage.h>
 #include <lib/subghz/types.h>
 
-#define SUBGHZ_LAST_SETTING_FREQUENCY_ANALYZER_TRIGGER        (-93.0f)
 // 1 = "AM650"
 // "AM270", "AM650", "FM238", "FM12K", "FM476",
-#define SUBGHZ_LAST_SETTING_DEFAULT_PRESET                    1
-#define SUBGHZ_LAST_SETTING_DEFAULT_FREQUENCY                 433920000
-#define SUBGHZ_LAST_SETTING_FREQUENCY_ANALYZER_FEEDBACK_LEVEL 2
+#define SUBGHZ_LAST_SETTING_DEFAULT_PRESET    1
+#define SUBGHZ_LAST_SETTING_DEFAULT_FREQUENCY 433920000
 
 typedef struct {
     uint32_t frequency;
@@ -22,7 +20,6 @@ typedef struct {
     uint32_t filter;
     float rssi;
     bool delete_old_signals;
-
     uint32_t gps_baudrate;
     bool remove_duplicates;
     uint32_t repeater_state;
