@@ -4,7 +4,7 @@
 #include <loader/firmware_api/firmware_api.h>
 #include <inttypes.h>
 
-#define TAG "SubGhzGPS"
+#define TAG "SubGhzWarDrivingGPS"
 
 SubGhzGPS* subghz_gps_plugin_init(uint32_t baudrate) {
     bool connected = expansion_is_connected(furi_record_open(RECORD_EXPANSION));

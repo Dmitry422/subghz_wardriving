@@ -7,7 +7,7 @@
 #include <flipper_format/flipper_format.h>
 #include <flipper_format/flipper_format_i.h>
 
-#define TAG "SubGhz"
+#define TAG "SubGhzWarDriving_i"
 
 void subghz_blink_start(SubGhz* subghz) {
     furi_assert(subghz);

@@ -3,7 +3,7 @@
 #include <lib/subghz/protocols/bin_raw.h>
 #include <toolbox/name_generator.h>
 
-#define TAG "SubGhzSceneReceiver"
+#define TAG "SubGhzWarDrivingSceneReceiver"
 
 const NotificationSequence subghz_sequence_rx = {
     &message_green_255,

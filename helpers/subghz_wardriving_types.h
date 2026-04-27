@@ -52,9 +52,6 @@ typedef enum {
     SubGhzRxKeyStateStart,
     SubGhzRxKeyStateAddKey,
     SubGhzRxKeyStateExit,
-    SubGhzRxKeyStateRAWLoad,
-    SubGhzRxKeyStateRAWMore,
-    SubGhzRxKeyStateRAWSave,
     SubGhzRxKeyStateTX,
 } SubGhzRxKeyState;
 
@@ -83,8 +80,6 @@ typedef enum {
     SubGhzViewIdWidget,
     SubGhzViewIdTransmitter,
     SubGhzViewIdVariableItemList,
-    SubGhzViewIdFrequencyAnalyzer,
-    SubGhzViewIdReadRAW,
 
 } SubGhzViewId;
 
@@ -99,12 +94,6 @@ typedef enum {
     SubGhzViewReceiverModeLive,
     SubGhzViewReceiverModeFile,
 } SubGhzViewReceiverMode;
-
-typedef enum {
-    SubGhzDecodeRawStateStart,
-    SubGhzDecodeRawStateLoading,
-    SubGhzDecodeRawStateLoaded,
-} SubGhzDecodeRawState;
 
 /** SubGhz Repeater */
 typedef enum {

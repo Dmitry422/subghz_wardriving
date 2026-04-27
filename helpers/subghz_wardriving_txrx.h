@@ -9,7 +9,7 @@
 #include <lib/subghz/protocols/raw.h>
 #include <lib/subghz/devices/devices.h>
 
-typedef struct SubGhzTxRxWarDiving SubGhzTxRxWarDiving;
+typedef struct SubGhzWarDrivingTxRx SubGhzWarDrivingTxRx;
 
 typedef void (*SubGhzTxRxNeedSaveCallback)(void* context);
 
@@ -22,16 +22,16 @@ typedef enum {
 /**
  * Allocate SubGhzTxRx
  * 
- * @return SubGhzTxRxWarDiving* pointer to SubGhzTxRx
+ * @return SubGhzWarDrivingTxRx* pointer to SubGhzTxRx
  */
-SubGhzTxRxWarDiving* subghz_wardriving_txrx_alloc(void);
+SubGhzWarDrivingTxRx* subghz_wardriving_txrx_alloc(void);
 
 /**
  * Free SubGhzTxRx
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_free(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_free(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Check if the database is loaded
@@ -39,7 +39,7 @@ void subghz_wardriving_txrx_free(SubGhzTxRxWarDiving* instance);
  * @param instance Pointer to a SubGhzTxRx
  * @return bool True if the database is loaded
  */
-bool subghz_wardriving_txrx_is_database_loaded(SubGhzTxRxWarDiving* instance);
+bool subghz_wardriving_txrx_is_database_loaded(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set preset 
@@ -53,7 +53,7 @@ bool subghz_wardriving_txrx_is_database_loaded(SubGhzTxRxWarDiving* instance);
  * @param preset_data_size Size of preset data
  */
 void subghz_wardriving_txrx_set_preset(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* preset_name,
     uint32_t frequency,
     float latitude,
@@ -81,7 +81,7 @@ uint8_t* subghz_wardriving_txrx_set_tx_power(
  * @return const char*  Name of preset
  */
 const char*
-    subghz_wardriving_txrx_get_preset_name(SubGhzTxRxWarDiving* instance, const char* preset);
+    subghz_wardriving_txrx_get_preset_name(SubGhzWarDrivingTxRx* instance, const char* preset);
 
 /**
  * Get of preset
@@ -89,7 +89,7 @@ const char*
  * @param instance Pointer to a SubGhzTxRx
  * @return SubGhzRadioPreset Preset
  */
-SubGhzRadioPreset subghz_wardriving_txrx_get_preset(SubGhzTxRxWarDiving* instance);
+SubGhzRadioPreset subghz_wardriving_txrx_get_preset(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Get string frequency and modulation
@@ -99,7 +99,7 @@ SubGhzRadioPreset subghz_wardriving_txrx_get_preset(SubGhzTxRxWarDiving* instanc
  * @param modulation Pointer to a string modulation
  */
 void subghz_wardriving_txrx_get_frequency_and_modulation(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     FuriString* frequency,
     FuriString* modulation,
     bool long_name);
@@ -110,7 +110,7 @@ void subghz_wardriving_txrx_get_frequency_and_modulation(
  * @param instance Pointer to a SubGhzTxRx
  * @return latitude
 */
-float subghz_wardriving_txrx_get_latitude(SubGhzTxRxWarDiving* instance);
+float subghz_wardriving_txrx_get_latitude(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Get longitude value
@@ -118,7 +118,7 @@ float subghz_wardriving_txrx_get_latitude(SubGhzTxRxWarDiving* instance);
  * @param instance Pointer to a SubGhzTxRx
  * @return longitude
 */
-float subghz_wardriving_txrx_get_longitude(SubGhzTxRxWarDiving* instance);
+float subghz_wardriving_txrx_get_longitude(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Start TX CC1101
@@ -128,28 +128,28 @@ float subghz_wardriving_txrx_get_longitude(SubGhzTxRxWarDiving* instance);
  * @return SubGhzTxRxStartTxState 
  */
 SubGhzTxRxStartTxState
-    subghz_wardriving_txrx_tx_start(SubGhzTxRxWarDiving* instance, FlipperFormat* flipper_format);
+    subghz_wardriving_txrx_tx_start(SubGhzWarDrivingTxRx* instance, FlipperFormat* flipper_format);
 
 /**
  * Start RX CC1101
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_rx_start(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_rx_start(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Stop TX/RX CC1101
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_stop(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_stop(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set sleep mode CC1101
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_sleep(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_sleep(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Update frequency CC1101 in automatic mode (hopper)
@@ -157,7 +157,7 @@ void subghz_wardriving_txrx_sleep(SubGhzTxRxWarDiving* instance);
  * @param instance Pointer to a SubGhzTxRx
  * @param stay_threshold RSSI theshold over which to stay before hopping
  */
-void subghz_wardriving_txrx_hopper_update(SubGhzTxRxWarDiving* instance, float stay_threshold);
+void subghz_wardriving_txrx_hopper_update(SubGhzWarDrivingTxRx* instance, float stay_threshold);
 
 /**
  * Get state hopper
@@ -165,7 +165,7 @@ void subghz_wardriving_txrx_hopper_update(SubGhzTxRxWarDiving* instance, float s
  * @param instance Pointer to a SubGhzTxRx
  * @return SubGhzHopperState 
  */
-SubGhzHopperState subghz_wardriving_txrx_hopper_get_state(SubGhzTxRxWarDiving* instance);
+SubGhzHopperState subghz_wardriving_txrx_hopper_get_state(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set state hopper
@@ -174,7 +174,7 @@ SubGhzHopperState subghz_wardriving_txrx_hopper_get_state(SubGhzTxRxWarDiving* i
  * @param state State hopper
  */
 void subghz_wardriving_txrx_hopper_set_state(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzHopperState state);
 
 /**
@@ -182,42 +182,42 @@ void subghz_wardriving_txrx_hopper_set_state(
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_hopper_unpause(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_hopper_unpause(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set pause hopper
  * 
  * @param instance Pointer to a SubGhzTxRx
  */
-void subghz_wardriving_txrx_hopper_pause(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_hopper_pause(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Speaker on
  * 
  * @param instance Pointer to a SubGhzTxRx 
  */
-void subghz_wardriving_txrx_speaker_on(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_speaker_on(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Speaker off
  * 
  * @param instance Pointer to a SubGhzTxRx 
  */
-void subghz_wardriving_txrx_speaker_off(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_speaker_off(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Speaker mute
  * 
  * @param instance Pointer to a SubGhzTxRx 
  */
-void subghz_wardriving_txrx_speaker_mute(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_speaker_mute(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Speaker unmute
  * 
  * @param instance Pointer to a SubGhzTxRx 
  */
-void subghz_wardriving_txrx_speaker_unmute(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_speaker_unmute(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set state speaker
@@ -226,7 +226,7 @@ void subghz_wardriving_txrx_speaker_unmute(SubGhzTxRxWarDiving* instance);
  * @param state State speaker
  */
 void subghz_wardriving_txrx_speaker_set_state(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzSpeakerState state);
 
 /**
@@ -235,7 +235,7 @@ void subghz_wardriving_txrx_speaker_set_state(
  * @param instance Pointer to a SubGhzTxRx 
  * @return SubGhzSpeakerState 
  */
-SubGhzSpeakerState subghz_wardriving_txrx_speaker_get_state(SubGhzTxRxWarDiving* instance);
+SubGhzSpeakerState subghz_wardriving_txrx_speaker_get_state(SubGhzWarDrivingTxRx* instance);
 
 /**
  * load decoder by name protocol
@@ -245,7 +245,7 @@ SubGhzSpeakerState subghz_wardriving_txrx_speaker_get_state(SubGhzTxRxWarDiving*
  * @return bool True if the decoder is loaded 
  */
 bool subghz_wardriving_txrx_load_decoder_by_name_protocol(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* name_protocol);
 
 /**
@@ -254,7 +254,7 @@ bool subghz_wardriving_txrx_load_decoder_by_name_protocol(
  * @param instance Pointer to a SubGhzTxRx
  * @return SubGhzProtocolDecoderBase* Pointer to a SubGhzProtocolDecoderBase
  */
-SubGhzProtocolDecoderBase* subghz_wardriving_txrx_get_decoder(SubGhzTxRxWarDiving* instance);
+SubGhzProtocolDecoderBase* subghz_wardriving_txrx_get_decoder(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Set callback for save data
@@ -264,7 +264,7 @@ SubGhzProtocolDecoderBase* subghz_wardriving_txrx_get_decoder(SubGhzTxRxWarDivin
  * @param context Context for callback
  */
 void subghz_wardriving_txrx_set_need_save_callback(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzTxRxNeedSaveCallback callback,
     void* context);
 
@@ -274,7 +274,7 @@ void subghz_wardriving_txrx_set_need_save_callback(
  * @param instance Pointer to a SubGhzTxRx
  * @return FlipperFormat* 
  */
-FlipperFormat* subghz_wardriving_txrx_get_fff_data(SubGhzTxRxWarDiving* instance);
+FlipperFormat* subghz_wardriving_txrx_get_fff_data(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Get pointer to a SugGhzSetting
@@ -282,7 +282,7 @@ FlipperFormat* subghz_wardriving_txrx_get_fff_data(SubGhzTxRxWarDiving* instance
  * @param instance Pointer to a SubGhzTxRx
  * @return SubGhzSetting* 
  */
-SubGhzSetting* subghz_wardriving_txrx_get_setting(SubGhzTxRxWarDiving* instance);
+SubGhzSetting* subghz_wardriving_txrx_get_setting(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Is it possible to save this protocol
@@ -290,7 +290,7 @@ SubGhzSetting* subghz_wardriving_txrx_get_setting(SubGhzTxRxWarDiving* instance)
  * @param instance Pointer to a SubGhzTxRx 
  * @return bool True if it is possible to save this protocol
  */
-bool subghz_wardriving_txrx_protocol_is_serializable(SubGhzTxRxWarDiving* instance);
+bool subghz_wardriving_txrx_protocol_is_serializable(SubGhzWarDrivingTxRx* instance);
 
 /**
  * Is it possible to send this protocol
@@ -299,7 +299,7 @@ bool subghz_wardriving_txrx_protocol_is_serializable(SubGhzTxRxWarDiving* instan
  * @return bool True if it is possible to send this protocol
  */
 bool subghz_wardriving_txrx_protocol_is_transmittable(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     bool check_type);
 
 /**
@@ -309,7 +309,7 @@ bool subghz_wardriving_txrx_protocol_is_transmittable(
  * @param filter Filter
  */
 void subghz_wardriving_txrx_receiver_set_filter(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzProtocolFlag filter);
 
 /**
@@ -320,7 +320,7 @@ void subghz_wardriving_txrx_receiver_set_filter(
  * @param context Context for callback
  */
 void subghz_wardriving_txrx_set_rx_callback(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzReceiverCallback callback,
     void* context);
 
@@ -332,7 +332,7 @@ void subghz_wardriving_txrx_set_rx_callback(
  * @param context Context for callback
  */
 void subghz_wardriving_txrx_set_raw_file_encoder_worker_callback_end(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzProtocolEncoderRAWCallbackEnd callback,
     void* context);
 
@@ -343,7 +343,7 @@ void subghz_wardriving_txrx_set_raw_file_encoder_worker_callback_end(
 * @return bool True if is connected to the external radio device
 */
 bool subghz_wardriving_txrx_radio_device_is_external_connected(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* name);
 
 /* Set the selected radio device to use
@@ -353,7 +353,7 @@ bool subghz_wardriving_txrx_radio_device_is_external_connected(
 * @return SubGhzRadioDeviceType Type of installed radio device
 */
 SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_set(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzRadioDeviceType radio_device_type);
 
 /* Get the selected radio device to use
@@ -361,21 +361,21 @@ SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_set(
 * @param instance Pointer to a SubGhzTxRx
 * @return SubGhzRadioDeviceType Type of installed radio device
 */
-SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_get(SubGhzTxRxWarDiving* instance);
+SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_get(SubGhzWarDrivingTxRx* instance);
 
 /* Get RSSI the selected radio device to use
 *
 * @param instance Pointer to a SubGhzTxRx
 * @return float RSSI
 */
-float subghz_wardriving_txrx_radio_device_get_rssi(SubGhzTxRxWarDiving* instance);
+float subghz_wardriving_txrx_radio_device_get_rssi(SubGhzWarDrivingTxRx* instance);
 
 /* Get name the selected radio device to use
 *
 * @param instance Pointer to a SubGhzTxRx
 * @return const char* Name of installed radio device
 */
-const char* subghz_wardriving_txrx_radio_device_get_name(SubGhzTxRxWarDiving* instance);
+const char* subghz_wardriving_txrx_radio_device_get_name(SubGhzWarDrivingTxRx* instance);
 
 /* Get intelligence whether frequency the selected radio device to use
 *
@@ -383,20 +383,20 @@ const char* subghz_wardriving_txrx_radio_device_get_name(SubGhzTxRxWarDiving* in
 * @return bool True if the frequency is valid
 */
 bool subghz_wardriving_txrx_radio_device_is_frequency_valid(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency);
 
 bool subghz_wardriving_txrx_radio_device_is_tx_allowed(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency);
 
-void subghz_wardriving_txrx_set_debug_pin_state(SubGhzTxRxWarDiving* instance, bool state);
-bool subghz_wardriving_txrx_get_debug_pin_state(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_set_debug_pin_state(SubGhzWarDrivingTxRx* instance, bool state);
+bool subghz_wardriving_txrx_get_debug_pin_state(SubGhzWarDrivingTxRx* instance);
 
-void subghz_wardriving_txrx_reset_dynamic_and_custom_btns(SubGhzTxRxWarDiving* instance);
+void subghz_wardriving_txrx_reset_dynamic_and_custom_btns(SubGhzWarDrivingTxRx* instance);
 
 SubGhzReceiver* subghz_wardriving_txrx_get_receiver(
-    SubGhzTxRxWarDiving* instance); // TODO use only in DecodeRaw
+    SubGhzWarDrivingTxRx* instance); // TODO use only in DecodeRaw
 
 /**
  * @brief Set current preset AM650 without additional params
@@ -404,7 +404,7 @@ SubGhzReceiver* subghz_wardriving_txrx_get_receiver(
  * @param instance - instance Pointer to a SubGhzTxRx
  * @param frequency - frequency of preset, if pass 0 then taking default frequency 433.92MHz
  */
-void subghz_wardriving_txrx_set_default_preset(SubGhzTxRxWarDiving* instance, uint32_t frequency);
+void subghz_wardriving_txrx_set_default_preset(SubGhzWarDrivingTxRx* instance, uint32_t frequency);
 
 /**
  * @brief Set current preset by index
@@ -416,7 +416,7 @@ void subghz_wardriving_txrx_set_default_preset(SubGhzTxRxWarDiving* instance, ui
  * @return const char* -  name of preset
  */
 const char* subghz_wardriving_txrx_set_preset_internal(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency,
     uint8_t index,
     uint8_t tx_power);

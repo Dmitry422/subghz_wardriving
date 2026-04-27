@@ -2,7 +2,7 @@
 
 #include "subghz_wardriving_txrx.h"
 
-struct SubGhzTxRxWarDiving {
+struct SubGhzWarDrivingTxRx {
     SubGhzWorker* worker;
 
     SubGhzEnvironment* environment;

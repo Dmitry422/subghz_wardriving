@@ -8,7 +8,7 @@
 
 #define SUBGHZ_HISTORY_MAX       25
 #define SUBGHZ_HISTORY_FREE_HEAP (2048)
-#define TAG                      "SubGhzHistory"
+#define TAG                      "SubGhzWarDrivingHistory"
 
 typedef struct {
     FuriString* item_str;

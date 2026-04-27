@@ -2,7 +2,7 @@
 #include <float_tools.h>
 #include "../subghz_wardriving_i.h"
 
-#define TAG "SubGhzThresholdRssi"
+#define TAG "SubGhzWarDrivingThresholdRssi"
 
 #define THRESHOLD_RSSI_LOW_COUNT 10
 

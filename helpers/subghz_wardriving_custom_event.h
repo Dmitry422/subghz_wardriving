@@ -3,28 +3,22 @@
 typedef enum {
     SubGhzCustomEventManagerNoSet = 0,
     SubGhzCustomEventManagerSet,
-    SubGhzCustomEventManagerSetRAW,
 
     //SubGhzCustomEvent
     SubGhzCustomEventSceneDeleteSuccess = 100,
     SubGhzCustomEventSceneDelete,
     SubGhzCustomEventSceneDeleteBack,
-    SubGhzCustomEventSceneDeleteRAW,
-    SubGhzCustomEventSceneDeleteRAWBack,
 
     SubGhzCustomEventSceneReceiverInfoTxStart,
     SubGhzCustomEventSceneReceiverInfoTxStop,
     SubGhzCustomEventSceneReceiverInfoSave,
     SubGhzCustomEventSceneReceiverInfoSats,
     SubGhzCustomEventSceneSaveName,
-    SubGhzCustomEventSceneSignalSettings,
     SubGhzCustomEventSceneSaveSuccess,
     SubGhzCustomEventSceneShowErrorBack,
     SubGhzCustomEventSceneShowErrorOk,
     SubGhzCustomEventSceneShowErrorSub,
     SubGhzCustomEventSceneShowOnlyRX,
-    SubGhzCustomEventSceneAnalyzerLock,
-    SubGhzCustomEventSceneAnalyzerUnlock,
     SubGhzCustomEventSceneSettingRepeater,
     SubGhzCustomEventSceneSettingRemoveDuplicates,
     SubGhzCustomEventSceneSettingLock,
@@ -32,12 +26,6 @@ typedef enum {
 
     SubGhzCustomEventSceneExit,
     SubGhzCustomEventSceneStay,
-
-    SubGhzCustomEventSceneRpcLoad,
-    SubGhzCustomEventSceneRpcButtonPress,
-    SubGhzCustomEventSceneRpcButtonRelease,
-    SubGhzCustomEventSceneRpcButtonPressRelease,
-    SubGhzCustomEventSceneRpcSessionClose,
 
     SubGhzCustomEventViewReceiverOK,
     SubGhzCustomEventViewReceiverOKLong,
@@ -48,24 +36,10 @@ typedef enum {
     SubGhzCustomEventViewReceiverUnlock,
     SubGhzCustomEventViewReceiverDeleteItem,
 
-    SubGhzCustomEventViewReadRAWBack,
-    SubGhzCustomEventViewReadRAWIDLE,
-    SubGhzCustomEventViewReadRAWREC,
-    SubGhzCustomEventViewReadRAWConfig,
-    SubGhzCustomEventViewReadRAWErase,
-    SubGhzCustomEventViewReadRAWSendStart,
-    SubGhzCustomEventViewReadRAWSendStop,
-    SubGhzCustomEventViewReadRAWSave,
-    SubGhzCustomEventViewReadRAWTXRXStop,
-    SubGhzCustomEventViewReadRAWMore,
-
     SubGhzCustomEventViewTransmitterBack,
     SubGhzCustomEventViewTransmitterSendStart,
     SubGhzCustomEventViewTransmitterSendStop,
     SubGhzCustomEventViewTransmitterError,
-
-    SubGhzCustomEventViewFreqAnalOkShort,
-    SubGhzCustomEventViewFreqAnalOkLong,
 
     SubGhzCustomEventViewRepeaterStart,
     SubGhzCustomEventViewRepeaterStop,

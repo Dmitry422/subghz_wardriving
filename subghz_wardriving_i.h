@@ -52,7 +52,7 @@ struct SubGhz {
     Gui* gui;
     NotificationApp* notifications;
 
-    SubGhzTxRxWarDiving* txrx;
+    SubGhzWarDrivingTxRx* txrx;
 
     SceneManager* scene_manager;
     ViewDispatcher* view_dispatcher;

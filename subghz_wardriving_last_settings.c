@@ -1,7 +1,7 @@
 #include "subghz_wardriving_last_settings.h"
 #include "subghz_wardriving_i.h"
 
-#define TAG "SubGhzLastSettings"
+#define TAG "SubGhzWarDrivingLastSettings"
 
 #define SUBGHZ_LAST_SETTING_FILE_TYPE    "Flipper SubGhz Last Setting File"
 #define SUBGHZ_LAST_SETTING_FILE_VERSION 3

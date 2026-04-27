@@ -7,24 +7,24 @@
 
 #include <power/power_service/power.h>
 
-#define TAG "SubGhzTxRx"
+#define TAG "SubGhzWarDrivingTxRx"
 
-static void subghz_wardriving_txrx_radio_device_power_on(SubGhzTxRxWarDiving* instance) {
+static void subghz_wardriving_txrx_radio_device_power_on(SubGhzWarDrivingTxRx* instance) {
     UNUSED(instance);
     Power* power = furi_record_open(RECORD_POWER);
     power_enable_otg(power, true);
     furi_record_close(RECORD_POWER);
 }
 
-static void subghz_wardriving_txrx_radio_device_power_off(SubGhzTxRxWarDiving* instance) {
+static void subghz_wardriving_txrx_radio_device_power_off(SubGhzWarDrivingTxRx* instance) {
     UNUSED(instance);
     Power* power = furi_record_open(RECORD_POWER);
     power_enable_otg(power, false);
     furi_record_close(RECORD_POWER);
 }
 
-SubGhzTxRxWarDiving* subghz_wardriving_txrx_alloc(void) {
-    SubGhzTxRxWarDiving* instance = malloc(sizeof(SubGhzTxRxWarDiving));
+SubGhzWarDrivingTxRx* subghz_wardriving_txrx_alloc(void) {
+    SubGhzWarDrivingTxRx* instance = malloc(sizeof(SubGhzWarDrivingTxRx));
     instance->setting = subghz_setting_alloc();
     subghz_setting_load(instance->setting, EXT_PATH("subghz/assets/setting_user"));
 
@@ -68,7 +68,7 @@ SubGhzTxRxWarDiving* subghz_wardriving_txrx_alloc(void) {
     return instance;
 }
 
-void subghz_wardriving_txrx_free(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_free(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
 
     if(instance->radio_device_type != SubGhzRadioDeviceTypeInternal) {
@@ -89,13 +89,13 @@ void subghz_wardriving_txrx_free(SubGhzTxRxWarDiving* instance) {
     free(instance);
 }
 
-bool subghz_wardriving_txrx_is_database_loaded(SubGhzTxRxWarDiving* instance) {
+bool subghz_wardriving_txrx_is_database_loaded(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->is_database_loaded;
 }
 
 void subghz_wardriving_txrx_set_preset(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* preset_name,
     uint32_t frequency,
     float latitude,
@@ -178,7 +178,7 @@ uint8_t* subghz_wardriving_txrx_set_tx_power(
 }
 
 const char*
-    subghz_wardriving_txrx_get_preset_name(SubGhzTxRxWarDiving* instance, const char* preset) {
+    subghz_wardriving_txrx_get_preset_name(SubGhzWarDrivingTxRx* instance, const char* preset) {
     UNUSED(instance);
     const char* preset_name = "";
     if(!strcmp(preset, "FuriHalSubGhzPresetOok270Async")) {
@@ -199,13 +199,13 @@ const char*
     return preset_name;
 }
 
-SubGhzRadioPreset subghz_wardriving_txrx_get_preset(SubGhzTxRxWarDiving* instance) {
+SubGhzRadioPreset subghz_wardriving_txrx_get_preset(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return *instance->preset;
 }
 
 void subghz_wardriving_txrx_get_frequency_and_modulation(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     FuriString* frequency,
     FuriString* modulation,
     bool long_name) {
@@ -227,17 +227,17 @@ void subghz_wardriving_txrx_get_frequency_and_modulation(
     }
 }
 
-float subghz_wardriving_txrx_get_latitude(SubGhzTxRxWarDiving* instance) {
+float subghz_wardriving_txrx_get_latitude(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->latitude;
 }
 
-float subghz_wardriving_txrx_get_longitude(SubGhzTxRxWarDiving* instance) {
+float subghz_wardriving_txrx_get_longitude(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->longitude;
 }
 
-static void subghz_wardriving_txrx_begin(SubGhzTxRxWarDiving* instance, uint8_t* preset_data) {
+static void subghz_wardriving_txrx_begin(SubGhzWarDrivingTxRx* instance, uint8_t* preset_data) {
     furi_assert(instance);
     subghz_devices_reset(instance->radio_device);
     subghz_devices_idle(instance->radio_device);
@@ -245,7 +245,7 @@ static void subghz_wardriving_txrx_begin(SubGhzTxRxWarDiving* instance, uint8_t*
     instance->txrx_state = SubGhzTxRxStateIDLE;
 }
 
-static uint32_t subghz_wardriving_txrx_rx(SubGhzTxRxWarDiving* instance, uint32_t frequency) {
+static uint32_t subghz_wardriving_txrx_rx(SubGhzWarDrivingTxRx* instance, uint32_t frequency) {
     furi_assert(instance);
     furi_assert(
         instance->txrx_state != SubGhzTxRxStateRx && instance->txrx_state != SubGhzTxRxStateSleep);
@@ -263,7 +263,7 @@ static uint32_t subghz_wardriving_txrx_rx(SubGhzTxRxWarDiving* instance, uint32_
     return value;
 }
 
-static void subghz_wardriving_txrx_idle(SubGhzTxRxWarDiving* instance) {
+static void subghz_wardriving_txrx_idle(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->txrx_state != SubGhzTxRxStateSleep) {
         subghz_devices_idle(instance->radio_device);
@@ -272,7 +272,7 @@ static void subghz_wardriving_txrx_idle(SubGhzTxRxWarDiving* instance) {
     }
 }
 
-static void subghz_wardriving_txrx_rx_end(SubGhzTxRxWarDiving* instance) {
+static void subghz_wardriving_txrx_rx_end(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     furi_assert(instance->txrx_state == SubGhzTxRxStateRx);
 
@@ -285,13 +285,13 @@ static void subghz_wardriving_txrx_rx_end(SubGhzTxRxWarDiving* instance) {
     instance->txrx_state = SubGhzTxRxStateIDLE;
 }
 
-void subghz_wardriving_txrx_sleep(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_sleep(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     subghz_devices_sleep(instance->radio_device);
     instance->txrx_state = SubGhzTxRxStateSleep;
 }
 
-static bool subghz_wardriving_txrx_tx(SubGhzTxRxWarDiving* instance, uint32_t frequency) {
+static bool subghz_wardriving_txrx_tx(SubGhzWarDrivingTxRx* instance, uint32_t frequency) {
     furi_assert(instance);
     furi_assert(instance->txrx_state != SubGhzTxRxStateSleep);
 
@@ -308,7 +308,7 @@ static bool subghz_wardriving_txrx_tx(SubGhzTxRxWarDiving* instance, uint32_t fr
 }
 
 SubGhzTxRxStartTxState
-    subghz_wardriving_txrx_tx_start(SubGhzTxRxWarDiving* instance, FlipperFormat* flipper_format) {
+    subghz_wardriving_txrx_tx_start(SubGhzWarDrivingTxRx* instance, FlipperFormat* flipper_format) {
     furi_assert(instance);
     furi_assert(flipper_format);
 
@@ -377,7 +377,7 @@ SubGhzTxRxStartTxState
     return ret;
 }
 
-void subghz_wardriving_txrx_rx_start(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_rx_start(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     subghz_wardriving_txrx_stop(instance);
     subghz_wardriving_txrx_begin(
@@ -389,7 +389,7 @@ void subghz_wardriving_txrx_rx_start(SubGhzTxRxWarDiving* instance) {
 }
 
 void subghz_wardriving_txrx_set_need_save_callback(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzTxRxNeedSaveCallback callback,
     void* context) {
     furi_assert(instance);
@@ -397,7 +397,7 @@ void subghz_wardriving_txrx_set_need_save_callback(
     instance->need_save_context = context;
 }
 
-static void subghz_wardriving_txrx_tx_stop(SubGhzTxRxWarDiving* instance) {
+static void subghz_wardriving_txrx_tx_stop(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     furi_assert(instance->txrx_state == SubGhzTxRxStateTx);
     //Stop TX
@@ -415,17 +415,17 @@ static void subghz_wardriving_txrx_tx_stop(SubGhzTxRxWarDiving* instance) {
     subghz_wardriving_txrx_speaker_off(instance);
 }
 
-FlipperFormat* subghz_wardriving_txrx_get_fff_data(SubGhzTxRxWarDiving* instance) {
+FlipperFormat* subghz_wardriving_txrx_get_fff_data(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->fff_data;
 }
 
-SubGhzSetting* subghz_wardriving_txrx_get_setting(SubGhzTxRxWarDiving* instance) {
+SubGhzSetting* subghz_wardriving_txrx_get_setting(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->setting;
 }
 
-void subghz_wardriving_txrx_stop(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_stop(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
 
     switch(instance->txrx_state) {
@@ -443,7 +443,7 @@ void subghz_wardriving_txrx_stop(SubGhzTxRxWarDiving* instance) {
     }
 }
 
-void subghz_wardriving_txrx_hopper_update(SubGhzTxRxWarDiving* instance, float stay_threshold) {
+void subghz_wardriving_txrx_hopper_update(SubGhzWarDrivingTxRx* instance, float stay_threshold) {
     furi_assert(instance);
 
     switch(instance->hopper_state) {
@@ -493,33 +493,33 @@ void subghz_wardriving_txrx_hopper_update(SubGhzTxRxWarDiving* instance, float s
     }
 }
 
-SubGhzHopperState subghz_wardriving_txrx_hopper_get_state(SubGhzTxRxWarDiving* instance) {
+SubGhzHopperState subghz_wardriving_txrx_hopper_get_state(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->hopper_state;
 }
 
 void subghz_wardriving_txrx_hopper_set_state(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzHopperState state) {
     furi_assert(instance);
     instance->hopper_state = state;
 }
 
-void subghz_wardriving_txrx_hopper_unpause(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_hopper_unpause(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->hopper_state == SubGhzHopperStatePause) {
         instance->hopper_state = SubGhzHopperStateRunning;
     }
 }
 
-void subghz_wardriving_txrx_hopper_pause(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_hopper_pause(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->hopper_state == SubGhzHopperStateRunning) {
         instance->hopper_state = SubGhzHopperStatePause;
     }
 }
 
-void subghz_wardriving_txrx_speaker_on(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_speaker_on(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->debug_pin_state) {
         subghz_devices_set_async_mirror_pin(instance->radio_device, &gpio_ibutton);
@@ -536,7 +536,7 @@ void subghz_wardriving_txrx_speaker_on(SubGhzTxRxWarDiving* instance) {
     }
 }
 
-void subghz_wardriving_txrx_speaker_off(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_speaker_off(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->debug_pin_state) {
         subghz_devices_set_async_mirror_pin(instance->radio_device, NULL);
@@ -553,7 +553,7 @@ void subghz_wardriving_txrx_speaker_off(SubGhzTxRxWarDiving* instance) {
     }
 }
 
-void subghz_wardriving_txrx_speaker_mute(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_speaker_mute(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->debug_pin_state) {
         subghz_devices_set_async_mirror_pin(instance->radio_device, NULL);
@@ -567,7 +567,7 @@ void subghz_wardriving_txrx_speaker_mute(SubGhzTxRxWarDiving* instance) {
     }
 }
 
-void subghz_wardriving_txrx_speaker_unmute(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_speaker_unmute(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     if(instance->debug_pin_state) {
         subghz_devices_set_async_mirror_pin(instance->radio_device, &gpio_ibutton);
@@ -582,19 +582,19 @@ void subghz_wardriving_txrx_speaker_unmute(SubGhzTxRxWarDiving* instance) {
 }
 
 void subghz_wardriving_txrx_speaker_set_state(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzSpeakerState state) {
     furi_assert(instance);
     instance->speaker_state = state;
 }
 
-SubGhzSpeakerState subghz_wardriving_txrx_speaker_get_state(SubGhzTxRxWarDiving* instance) {
+SubGhzSpeakerState subghz_wardriving_txrx_speaker_get_state(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->speaker_state;
 }
 
 bool subghz_wardriving_txrx_load_decoder_by_name_protocol(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* name_protocol) {
     furi_assert(instance);
     furi_assert(name_protocol);
@@ -607,19 +607,19 @@ bool subghz_wardriving_txrx_load_decoder_by_name_protocol(
     return res;
 }
 
-SubGhzProtocolDecoderBase* subghz_wardriving_txrx_get_decoder(SubGhzTxRxWarDiving* instance) {
+SubGhzProtocolDecoderBase* subghz_wardriving_txrx_get_decoder(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->decoder_result;
 }
 
-bool subghz_wardriving_txrx_protocol_is_serializable(SubGhzTxRxWarDiving* instance) {
+bool subghz_wardriving_txrx_protocol_is_serializable(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return (instance->decoder_result->protocol->flag & SubGhzProtocolFlag_Save) ==
            SubGhzProtocolFlag_Save;
 }
 
 bool subghz_wardriving_txrx_protocol_is_transmittable(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     bool check_type) {
     furi_assert(instance);
     const SubGhzProtocol* protocol = instance->decoder_result->protocol;
@@ -632,21 +632,21 @@ bool subghz_wardriving_txrx_protocol_is_transmittable(
 }
 
 void subghz_wardriving_txrx_receiver_set_filter(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzProtocolFlag filter) {
     furi_assert(instance);
     subghz_receiver_set_filter(instance->receiver, filter);
 }
 
 void subghz_wardriving_txrx_set_rx_callback(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzReceiverCallback callback,
     void* context) {
     subghz_receiver_set_rx_callback(instance->receiver, callback, context);
 }
 
 void subghz_wardriving_txrx_set_raw_file_encoder_worker_callback_end(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzProtocolEncoderRAWCallbackEnd callback,
     void* context) {
     subghz_protocol_raw_file_encoder_worker_set_callback_end(
@@ -656,7 +656,7 @@ void subghz_wardriving_txrx_set_raw_file_encoder_worker_callback_end(
 }
 
 bool subghz_wardriving_txrx_radio_device_is_external_connected(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     const char* name) {
     furi_assert(instance);
 
@@ -679,7 +679,7 @@ bool subghz_wardriving_txrx_radio_device_is_external_connected(
 }
 
 SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_set(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     SubGhzRadioDeviceType radio_device_type) {
     furi_assert(instance);
 
@@ -702,30 +702,30 @@ SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_set(
     return instance->radio_device_type;
 }
 
-SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_get(SubGhzTxRxWarDiving* instance) {
+SubGhzRadioDeviceType subghz_wardriving_txrx_radio_device_get(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->radio_device_type;
 }
 
-float subghz_wardriving_txrx_radio_device_get_rssi(SubGhzTxRxWarDiving* instance) {
+float subghz_wardriving_txrx_radio_device_get_rssi(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return subghz_devices_get_rssi(instance->radio_device);
 }
 
-const char* subghz_wardriving_txrx_radio_device_get_name(SubGhzTxRxWarDiving* instance) {
+const char* subghz_wardriving_txrx_radio_device_get_name(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return subghz_devices_get_name(instance->radio_device);
 }
 
 bool subghz_wardriving_txrx_radio_device_is_frequency_valid(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency) {
     furi_assert(instance);
     return subghz_devices_is_frequency_valid(instance->radio_device, frequency);
 }
 
 bool subghz_wardriving_txrx_radio_device_is_tx_allowed(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency) {
     // TODO: Remake this function to check if the frequency is allowed on specific module - for modules not based on CC1101
     furi_assert(instance);
@@ -744,17 +744,17 @@ bool subghz_wardriving_txrx_radio_device_is_tx_allowed(
     return true;
 }
 
-void subghz_wardriving_txrx_set_debug_pin_state(SubGhzTxRxWarDiving* instance, bool state) {
+void subghz_wardriving_txrx_set_debug_pin_state(SubGhzWarDrivingTxRx* instance, bool state) {
     furi_assert(instance);
     instance->debug_pin_state = state;
 }
 
-bool subghz_wardriving_txrx_get_debug_pin_state(SubGhzTxRxWarDiving* instance) {
+bool subghz_wardriving_txrx_get_debug_pin_state(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->debug_pin_state;
 }
 
-void subghz_wardriving_txrx_reset_dynamic_and_custom_btns(SubGhzTxRxWarDiving* instance) {
+void subghz_wardriving_txrx_reset_dynamic_and_custom_btns(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     subghz_environment_reset_keeloq(instance->environment);
 
@@ -763,12 +763,12 @@ void subghz_wardriving_txrx_reset_dynamic_and_custom_btns(SubGhzTxRxWarDiving* i
     subghz_custom_btns_reset();
 }
 
-SubGhzReceiver* subghz_wardriving_txrx_get_receiver(SubGhzTxRxWarDiving* instance) {
+SubGhzReceiver* subghz_wardriving_txrx_get_receiver(SubGhzWarDrivingTxRx* instance) {
     furi_assert(instance);
     return instance->receiver;
 }
 
-void subghz_wardriving_txrx_set_default_preset(SubGhzTxRxWarDiving* instance, uint32_t frequency) {
+void subghz_wardriving_txrx_set_default_preset(SubGhzWarDrivingTxRx* instance, uint32_t frequency) {
     furi_assert(instance);
 
     const char* default_modulation = "AM650";
@@ -780,7 +780,7 @@ void subghz_wardriving_txrx_set_default_preset(SubGhzTxRxWarDiving* instance, ui
 }
 
 const char* subghz_wardriving_txrx_set_preset_internal(
-    SubGhzTxRxWarDiving* instance,
+    SubGhzWarDrivingTxRx* instance,
     uint32_t frequency,
     uint8_t index,
     uint8_t tx_power) {

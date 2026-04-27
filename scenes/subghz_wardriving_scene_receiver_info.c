@@ -6,7 +6,7 @@
 #include "../helpers/subghz_wardriving_txrx_i.h"
 #include <lib/subghz/blocks/generic.h>
 
-#define TAG "SubGhzSceneReceiverInfo"
+#define TAG "SubGhzWarDrivingSceneReceiverInfo"
 
 void subghz_scene_receiver_info_callback(GuiButtonType result, InputType type, void* context) {
     furi_assert(context);

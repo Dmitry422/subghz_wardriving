@@ -1,7 +1,7 @@
 #include "../subghz_wardriving_i.h"
 #include <lib/toolbox/value_index.h>
 
-#define TAG "SubGhzSceneReceiverConfig"
+#define TAG "SubGhzWarDrivingSceneReceiverConfig"
 
 enum SubGhzSettingIndex {
     SubGhzSettingIndexFrequency,

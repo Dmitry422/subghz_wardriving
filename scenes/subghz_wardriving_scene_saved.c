@@ -1,14 +1,14 @@
 #include "../subghz_wardriving_i.h"
 
-#define TAG "SubGhzSceneSaved"
+#define TAG "SubGhzWarDrivingSceneSaved"
 
 void subghz_scene_saved_on_enter(void* context) {
     SubGhz* subghz = context;
 
     if(subghz_load_protocol_from_file(subghz)) {
         if(subghz_get_load_type_file(subghz) == SubGhzLoadTypeFileRaw) {
-            subghz_rx_key_state_set(subghz, SubGhzRxKeyStateRAWLoad);
-            scene_manager_next_scene(subghz->scene_manager, SubGhzSceneStart);
+            scene_manager_search_and_switch_to_previous_scene(
+                subghz->scene_manager, SubGhzSceneStart);
         } else {
             subghz_rx_key_state_set(subghz, SubGhzRxKeyStateIDLE);
             scene_manager_next_scene(subghz->scene_manager, SubGhzSceneSavedMenu);

@@ -6,7 +6,7 @@
 #include <float_tools.h>
 #include "subghz_wardriving_i.h"
 
-#define TAG "SubGhzApp"
+#define TAG "SubGhzWarDrivingApp"
 
 bool subghz_custom_event_callback(void* context, uint32_t event) {
     furi_assert(context);

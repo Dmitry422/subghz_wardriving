@@ -1,9 +1,7 @@
 #include "subghz_wardriving_gps.h"
 #include "minmea.h"
 
-// #include <momentum/momentum.h>
-
-#define UART_CH (FuriHalSerialIdUsart) //(momentum_settings.uart_nmea_channel)
+#define UART_CH (FuriHalSerialIdUsart)
 
 typedef enum {
     WorkerEvtStop = (1 << 0),
@@ -227,8 +225,6 @@ static void subghz_gps_init(SubGhzGPS* subghz_gps, uint32_t baudrate) {
     subghz_gps->deinit = &subghz_gps_deinit;
     subghz_gps->cat_realtime = &subghz_gps_cat_realtime;
 }
-
-#include <flipper_application/flipper_application.h>
 
 static const FlipperAppPluginDescriptor plugin_descriptor = {
     .appid = "subghz_plugin_gps",

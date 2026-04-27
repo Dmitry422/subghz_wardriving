@@ -8,7 +8,7 @@
 #include "../helpers/subghz_wardriving_txrx_i.h"
 #include "lib/subghz/blocks/generic.h"
 
-#define TAG "SubGhzSceneTransmitter"
+#define TAG "SubGhzWarDrivingSceneTransmitter"
 
 void subghz_scene_transmitter_callback(SubGhzCustomEvent event, void* context) {
     furi_assert(context);
