@@ -31,8 +31,6 @@
 #include <gui/modules/variable_item_list.h>
 #include <lib/toolbox/path.h>
 
-#include "rpc/rpc_app.h"
-
 #include <power/power_service/power.h>
 
 #include "helpers/subghz_wardriving_threshold_rssi.h"

@@ -5,21 +5,21 @@
 
 enum SubGhzSettingIndex {
     SubGhzSettingIndexFrequency,
-    SubGhzSettingIndexHopping,
     SubGhzSettingIndexModulation,
+    SubGhzSettingIndexHopping,
+
     SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRAWRSSIThreshold = SubGhzSettingIndexBinRAW,
     SubGhzSettingIndexRepeater,
     SubGhzSettingIndexRemoveDuplicates,
+    SubGhzSettingIndexDeleteOldSignals,
     SubGhzSettingIndexAutosave,
     SubGhzSettingIndexIgnoreReversRB2,
     SubGhzSettingIndexIgnoreAlarms,
     SubGhzSettingIndexIgnoreSensors,
     SubGhzSettingIndexIgnorePrinceton,
     SubGhzSettingIndexIgnoreNiceFlorS,
-    SubGhzSettingIndexDeleteOldSignals,
-    // SubGhzSettingIndexIgnoreWeather,
-    // SubGhzSettingIndexIgnoreTPMS,
+
     SubGhzSettingIndexSound,
     SubGhzSettingIndexResetToDefault,
     SubGhzSettingIndexLock,

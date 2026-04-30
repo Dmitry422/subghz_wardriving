@@ -1,12 +1,11 @@
 #include "subghz_wardriving_history.h"
 #include <lib/subghz/receiver.h>
-#include <rpc/rpc.h>
 #include <toolbox/stream/stream.h>
 #include <flipper_format/flipper_format.h>
 
 #include <furi.h>
 
-#define SUBGHZ_HISTORY_MAX       25
+#define SUBGHZ_HISTORY_MAX       15
 #define SUBGHZ_HISTORY_FREE_HEAP (2048)
 #define TAG                      "SubGhzWarDrivingHistory"
 
@@ -37,7 +36,6 @@ struct SubGhzHistory {
     uint32_t code_last_hash_data;
     FuriString* tmp_string;
     SubGhzHistoryStruct* history;
-    Rpc* rpc;
 };
 
 SubGhzHistory* subghz_wardriving_history_alloc(void) {
@@ -45,7 +43,6 @@ SubGhzHistory* subghz_wardriving_history_alloc(void) {
     instance->tmp_string = furi_string_alloc();
     instance->history = malloc(sizeof(SubGhzHistoryStruct));
     SubGhzHistoryItemArray_init(instance->history->data);
-    instance->rpc = furi_record_open(RECORD_RPC);
     return instance;
 }
 
@@ -62,7 +59,6 @@ void subghz_wardriving_history_free(SubGhzHistory* instance) {
         }
     SubGhzHistoryItemArray_clear(instance->history->data);
     free(instance->history);
-    furi_record_close(RECORD_RPC);
     free(instance);
 }
 

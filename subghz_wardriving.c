@@ -32,6 +32,11 @@ SubGhz* subghz_alloc() {
     subghz->file_path = furi_string_alloc();
     subghz->file_path_tmp = furi_string_alloc();
 
+    Storage* storage = furi_record_open(RECORD_STORAGE);
+    storage_simply_mkdir(storage, SUBGHZ_WARDR_APP_FOLDER);
+    storage_simply_mkdir(storage, SUBGHZ_WARDR_APP_FOLDER "/autosaved");
+    furi_record_close(RECORD_STORAGE);
+
     // GUI
     subghz->gui = furi_record_open(RECORD_GUI);
 
